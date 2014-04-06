@@ -101,4 +101,6 @@ stylus:
 # Deployment
 ## Docs: http://zespia.tw/hexo/docs/deployment.html
 deploy:
-  type:
+  type: github
+  repository: https://github.com/andrewmartin/andrewmartin.github.io.git
+  branch: master

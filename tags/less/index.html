@@ -362,17 +362,27 @@
 9
 10
 11
+12
+13
+14
+15
+16
 </pre></td><td class="code"><pre>.generate-margin(<span class="variable">@n</span>, <span class="variable">@i</span>: <span class="number">1</span>, <span class="variable">@direction</span>: bottom, <span class="variable">@type</span>: <span class="keyword">m</span>, <span class="variable">@iterator</span>: <span class="number">5</span>) <span class="keyword">when</span> (<span class="variable">@i</span> =&lt; <span class="variable">@n</span>) {
 
   <span class="variable">@suffix</span>: <span class="variable">@i</span><span class="variable">*@</span>iterator;
-  .<span class="variable">@{type}</span>-<span class="variable">@{direction}</span>-<span class="variable">@{suffix}</span> {
+  .<span class="variable">@{type}</span>-<span class="variable">@{direction}</span>-<span class="variable">@{suffix}</span> <span class="keyword">when</span> (<span class="variable">@type</span> = <span class="keyword">m</span>) {
     margin-<span class="variable">@{direction}</span>: <span class="variable">@suffix</span> + 0px;
+  }
+  .<span class="variable">@{type}</span>-<span class="variable">@{direction}</span>-<span class="variable">@{suffix}</span> <span class="keyword">when</span> (<span class="variable">@type</span> = p) {
+    padding-<span class="variable">@{direction}</span>: <span class="variable">@suffix</span> + 0px;
   }
   .generate-margin(<span class="variable">@n</span>, (<span class="variable">@i</span> + <span class="number">1</span>), <span class="variable">@direction</span>, <span class="variable">@type</span>, <span class="variable">@iterator</span>);
 }
 
-.generate-margin(<span class="number">10</span>, <span class="number">1</span>, top, <span class="keyword">m</span>, <span class="number">5</span>);
-.generate-margin(<span class="number">10</span>, <span class="number">1</span>, bottom, p, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, top, <span class="keyword">m</span>, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, bottom, <span class="keyword">m</span>, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, bottom, p, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, top, p, <span class="number">5</span>);
 </pre></td></tr></table></figure>
 
 <p>Generates:</p>
@@ -434,7 +444,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="igag35cbr9ozzuvj" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="dpd2mzgso8u7bobn" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       

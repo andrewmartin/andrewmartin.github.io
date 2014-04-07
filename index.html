@@ -155,7 +155,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="tixsx73aw3hzdasy" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="6mr5i5i0ep563e89" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -271,7 +271,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="w9tej2osbwvkd5bf" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="2xq5ip6i97dy55jr" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -562,17 +562,27 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
 9
 10
 11
+12
+13
+14
+15
+16
 </pre></td><td class="code"><pre>.generate-margin(<span class="variable">@n</span>, <span class="variable">@i</span>: <span class="number">1</span>, <span class="variable">@direction</span>: bottom, <span class="variable">@type</span>: <span class="keyword">m</span>, <span class="variable">@iterator</span>: <span class="number">5</span>) <span class="keyword">when</span> (<span class="variable">@i</span> =&lt; <span class="variable">@n</span>) {
 
   <span class="variable">@suffix</span>: <span class="variable">@i</span><span class="variable">*@</span>iterator;
-  .<span class="variable">@{type}</span>-<span class="variable">@{direction}</span>-<span class="variable">@{suffix}</span> {
+  .<span class="variable">@{type}</span>-<span class="variable">@{direction}</span>-<span class="variable">@{suffix}</span> <span class="keyword">when</span> (<span class="variable">@type</span> = <span class="keyword">m</span>) {
     margin-<span class="variable">@{direction}</span>: <span class="variable">@suffix</span> + 0px;
+  }
+  .<span class="variable">@{type}</span>-<span class="variable">@{direction}</span>-<span class="variable">@{suffix}</span> <span class="keyword">when</span> (<span class="variable">@type</span> = p) {
+    padding-<span class="variable">@{direction}</span>: <span class="variable">@suffix</span> + 0px;
   }
   .generate-margin(<span class="variable">@n</span>, (<span class="variable">@i</span> + <span class="number">1</span>), <span class="variable">@direction</span>, <span class="variable">@type</span>, <span class="variable">@iterator</span>);
 }
 
-.generate-margin(<span class="number">10</span>, <span class="number">1</span>, top, <span class="keyword">m</span>, <span class="number">5</span>);
-.generate-margin(<span class="number">10</span>, <span class="number">1</span>, bottom, p, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, top, <span class="keyword">m</span>, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, bottom, <span class="keyword">m</span>, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, bottom, p, <span class="number">5</span>);
+.generate-margin(<span class="number">15</span>, <span class="number">1</span>, top, p, <span class="number">5</span>);
 </pre></td></tr></table></figure>
 
 <p>Generates:</p>
@@ -634,7 +644,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="igag35cbr9ozzuvj" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="dpd2mzgso8u7bobn" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -680,7 +690,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="sj2y5g7a3g8reacz" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="1ru4bw6731wfqvdp" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       

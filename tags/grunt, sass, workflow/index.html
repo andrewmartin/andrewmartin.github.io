@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World, I&#39;m Using Hexo | Andrew Martin is a Web Developer</title>
+  <title>Tag: grunt, sass, workflow | Andrew Martin is a Web Developer</title>
 
-  <meta name="description" content="Andrew Martin chose Hexo as his blog platform." />
+  <meta name="description" content="Andrew Martin is a web developer who is infatuated with building beautiful applications. This is his blog." />
 
   <script type="text/javascript" src="//use.typekit.net/zbs5ebk.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -14,11 +14,11 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="og:type" content="blog">
-<meta name="og:title" content="Hello World, I'm Using Hexo">
-<meta name="og:url" content="http://blog.andrewmart.in/2014/04/05/hello-world/">
+<meta name="og:title">
+<meta name="og:url" content="http://blog.andrewmart.in/tags/grunt, sass, workflow/">
 <meta name="og:image">
 <meta name="og:site_name" content="Andrew Martin is a Web Developer">
-<meta name="og:description" content="Andrew Martin chose Hexo as his blog platform.">
+<meta name="og:description">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Andrew Martin is a Web Developer" type="application/atom+xml">
@@ -83,16 +83,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main">
+  
+    <article id="post-soft-injecting-css" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/04/05/hello-world/" class="article-date">
-  <time datetime="2014-04-05T23:23:05.000Z" itemprop="datePublished">4/5/14</time>
+    <a href="/2014/04/06/soft-injecting-css/" class="article-date">
+  <time datetime="2014-04-07T06:15:31.000Z" itemprop="datePublished">4/6/14</time>
 </a>
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Frameworks, Hexo/">Frameworks, Hexo</a>
-  </div>
-
   </div>
   <div class="article-inner">
     
@@ -100,8 +98,8 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      Hello World, I&#39;m Using Hexo
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/04/06/soft-injecting-css/">Soft Injecting CSS</a>
     </h1>
   
 
@@ -109,38 +107,61 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>After a long search, and coincidentally due to patience and timing, I’m finally making an effort to work on my blog. I’ve chosen a static site generator for the <a href="http://blog.guestlistapp.com/post/2304152860/five-reasons-to-use-a-static-site-generator-instead-of" target="_blank">many other reasons</a> out there, and so far, I have no regrets.</p>
-<p>I chose <a href="http://zespia.tw/hexo" target="_blank">Hexo</a> for one thing: speed. There are a ton of options out there, no doubt, and I started working in <a href="http://jekyllrb.com" target="_blank">Jekyll</a>, which I may be regretting down the road, but I must say that the millisecond generation process and overall ease of templating using EJS tags is definitely in my arena.</p>
+        <p>I am a big fan (if you haven’t noticed in my prior posts) of optimizing my workflow. One thing I’ve never found until recently was a solid way to deal with styles and a live workflow. In comes <a href="https://www.npmjs.org/package/grunt-style-injector" target="_blank">grunt-style-injector</a>.</p>
+<p>The task is simple.</p>
+<figure class="highlight coffee"><figcaption><span>gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="attribute">styleinjector</span>:
+  <span class="attribute">files</span>:
+    <span class="attribute">src</span>: <span class="string">'css/application.css'</span>
+    <span class="attribute">options</span>:
+      <span class="attribute">watchTask</span>: <span class="literal">false</span>
+      <span class="attribute">debugInfo</span>: <span class="literal">true</span>
+</pre></td></tr></table></figure>
+
+<p>You simply type in:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>⇒ grunt styleinjector
+Running <span class="string">"styleinjector:files"</span> (styleinjector) task
+   info  - socket.io started
+
+
+All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; tag <span class="keyword">in</span> your website.
+
+&lt;script src=<span class="string">'http://192.168.1.113:3000/socket.io/socket.io.js'</span>&gt;&lt;/script&gt;
+&lt;script src=<span class="string">'http://192.168.1.113:3001/style-injector-client.min.js'</span>&gt;&lt;/script&gt;
+</pre></td></tr></table></figure>
+
+<p>Put those snippets in your <code>index.html</code> (or partial of choice) and make sure you don’t commit said file, and you’re good to go. Since it’s framework agnostic, you can use whatever compilation process you want, and it never falsely reloads CSS (something I found) happened <em>all the time</em> with <code>LiveReload</code>.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="6j4l7w8gs05hnh4n" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="my142pt5jrcbq0la" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grunt, sass, workflow/">grunt, sass, workflow</a></li></ul>
 
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2014/04/05/loops-and-mixins-in-sass/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Loops and Mixins in SASS
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
 </article>
 
+
+  
+  
 </section>
         
           <aside id="sidebar">

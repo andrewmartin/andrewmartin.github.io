@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-04-07T19:14:02.738Z</updated>
+  <updated>2014-04-07T20:27:28.713Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -78,7 +78,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
     <link href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/"/>
     <id>http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/</id>
     <published>2014-04-07T00:51:01.000Z</published>
-    <updated>2014-04-07T18:21:31.000Z</updated>
+    <updated>2014-04-07T20:27:21.000Z</updated>
     <content type="html"><![CDATA[<p>I kicked off a project tonight and had a bunch of HTML files I wanted to open. I thought to myself, this has happened more than once, why not fire off a quick Grunt task?</p>
 <p>Let’s get this fired off:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre>1
@@ -86,7 +86,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
 3
 </pre></td><td class="code"><pre>$ npm init
 $ (... follow prompts)
-$ npm install grunt-cli --save && npm install grunt --save
+$ npm install -g grunt-cli grunt
 </pre></td></tr></table></figure>
 
 <p>We’ll need a the <code>open</code> npm module. The other dependencies are baked into node.</p>

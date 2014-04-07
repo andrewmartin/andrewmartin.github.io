@@ -85,6 +85,116 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-open-files-recursively-with-a-simple-grunt-task" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" class="article-date">
+  <time datetime="2014-04-07T00:51:01.000Z" itemprop="datePublished">4/6/14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/04/06/open-files-recursively-with-a-simple-grunt-task/">Open files recursively with a Simple Grunt task.</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I kicked off a project tonight and had a bunch of HTML files I wanted to open. I thought to myself, this has happened more than once, why not fire off a quick Grunt task?</p>
+<p>Let’s get this fired off:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>$ npm init
+$ (... follow prompts)
+$ npm install grunt-cli --save && npm install grunt --save
+</pre></td></tr></table></figure>
+
+<p>We’ll need a the <code>open</code> npm module. The other dependencies are baked into node.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>$ npm install open --save
+</pre></td></tr></table></figure>
+
+<p>I decided to set up a couple basic options, to at least make it feel like a more modular task I could use elsewhere:</p>
+<ul>
+<li>A base filename to open (in this case, <code>index.html</code>)</li>
+<li>Firefox as the <code>appName</code> for the <code>open</code> task, so as to not bog down my Chrome windows</li>
+<li>A base path to start from (in this case, just using the current path)</li>
+</ul>
+<p>Here’s the finalized <code>Gruntfile.coffee</code>:</p>
+<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre>open = <span class="built_in">require</span>(<span class="string">'open'</span>)
+fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
+
+<span class="built_in">module</span>.<span class="function"><span class="title">exports</span> = <span class="params">(grunt)</span> -&gt;</span>
+  grunt.initConfig
+    <span class="attribute">openFiles</span>:
+      <span class="attribute">options</span>:
+        <span class="attribute">filename</span>: <span class="string">"index.html"</span>
+        <span class="attribute">appName</span>: <span class="string">"Firefox"</span>
+      <span class="attribute">path</span>: <span class="string">"./"</span>
+
+  grunt.registerMultiTask <span class="string">'openFiles'</span>, <span class="string">'open'</span>,<span class="function"> -&gt;</span>
+    options = <span class="property">@options</span>()
+    basePath = <span class="property">@data</span>.toString()
+    files = fs.readdirSync(basePath)
+    <span class="keyword">for</span> i <span class="keyword">of</span> files
+      <span class="keyword">continue</span> <span class="keyword">unless</span> files.hasOwnProperty(i)
+      name = basePath + files[i]
+      <span class="keyword">if</span> fs.statSync(name).isDirectory()
+        open(name + <span class="string">"/"</span> + options.filename, options.appName)
+
+  grunt.registerTask(<span class="string">"default"</span>, <span class="string">"openFiles"</span>)
+</pre></td></tr></table></figure>
+
+<p>Pretty slick. All I need to do is type <code>grunt</code> in the terminal, it checks to ensure what it’s trying to open is a directory, and then fires it up.</p>
+<h4 id="Note:">Note:</h4>
+<p>Since all of the directories were named similarly, I was able to follow a pretty standard pattern. Of course, we could set this up a little more elegantly, say, by using a conditional to make sure the files exist, a limit to how many files we want to open, etc.</p>
+<p>This might be a one off use case, but just shows you how powerful (and easy) it can be to use Grunt to automate even more simple tasks.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="3oqtdxahfp1zo22j" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grunt/">grunt</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-loops-and-mixins-in-sass" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/04/05/loops-and-mixins-in-sass/" class="article-date">
@@ -354,7 +464,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="l37d9ajgvvtg1aq5" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="ii4bo51g53j22t06" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sass/">sass</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/smacss/">smacss</a></li></ul>
@@ -398,7 +508,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="4mhqa10nkhrmtft6" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="f5jr7dn7qgmjozvx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/">blog</a></li></ul>
@@ -428,7 +538,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -437,7 +547,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: NaNpx;">blog</a><a href="/tags/sass/" style="font-size: NaNpx;">sass</a><a href="/tags/smacss/" style="font-size: NaNpx;">smacss</a>
+      <a href="/tags/blog/" style="font-size: NaNpx;">blog</a><a href="/tags/grunt/" style="font-size: NaNpx;">grunt</a><a href="/tags/sass/" style="font-size: NaNpx;">sass</a><a href="/tags/smacss/" style="font-size: NaNpx;">smacss</a>
     </div>
   </div>
 
@@ -446,7 +556,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -456,6 +566,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/04/06/open-files-recursively-with-a-simple-grunt-task/">Open files recursively with a Simple Grunt task.</a>
+          </li>
         
           <li>
             <a href="/2014/04/05/loops-and-mixins-in-sass/">Loops and Mixins in SASS</a>

@@ -151,7 +151,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="rhmn1fwzsyqi2l5u" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="mo462rba8lfp9bki" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -263,7 +263,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="258p2u7m87f58nnl" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="k6h20btljvwd0ni1" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -540,13 +540,93 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
 ...
 </pre></td></tr></table></figure>
 
+<div class = "is-edited" markdown = "1">For those interested, I whipped up a little <code>LESS</code> version today.</div>
+
+<p>It’s a little different, but loops work a little differently in LESS. You just set up an iterator, kick off the mixin itself from within the mixin, and loop through as many times as you want.</p>
+<figure class="highlight less"><figcaption><span>helpers.less</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre>.generate-margin(<span class="variable">@n</span>, <span class="variable">@i</span>: <span class="number">1</span>, <span class="variable">@direction</span>: bottom, <span class="variable">@type</span>: <span class="keyword">m</span>, <span class="variable">@iterator</span>: <span class="number">5</span>) <span class="keyword">when</span> (<span class="variable">@i</span> =&lt; <span class="variable">@n</span>) {
+
+  <span class="variable">@suffix</span>: <span class="variable">@i</span><span class="variable">*@</span>iterator;
+  .<span class="variable">@{type}</span>-<span class="variable">@{direction}</span>-<span class="variable">@{suffix}</span> {
+    margin-<span class="variable">@{direction}</span>: <span class="variable">@suffix</span> + 0px;
+  }
+  .generate-margin(<span class="variable">@n</span>, (<span class="variable">@i</span> + <span class="number">1</span>), <span class="variable">@direction</span>, <span class="variable">@type</span>, <span class="variable">@iterator</span>);
+}
+
+.generate-margin(<span class="number">10</span>, <span class="number">1</span>, top, <span class="keyword">m</span>, <span class="number">5</span>);
+.generate-margin(<span class="number">10</span>, <span class="number">1</span>, bottom, p, <span class="number">5</span>);
+</pre></td></tr></table></figure>
+
+<p>Generates:</p>
+<figure class="highlight css"><figcaption><span>application.css</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td><td class="code"><pre>...
+<span class="class">.m-top-40</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">40</span>px</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.m-top-45</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">45</span>px</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.m-top-50</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-top</span>:<span class="value"> <span class="number">50</span>px</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.p-bottom-5</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">5</span>px</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.p-bottom-10</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">10</span>px</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.p-bottom-15</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">15</span>px</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.p-bottom-20</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">20</span>px</span></span>;
+<span class="rule">}</span></span>
+<span class="class">.p-bottom-25</span> <span class="rules">{
+  <span class="rule"><span class="attribute">margin-bottom</span>:<span class="value"> <span class="number">25</span>px</span></span>;
+<span class="rule"><span class="attribute">...</span></span></span>
+</pre></td></tr></table></figure>
+
 <p>This entire approach follows the pattern and way I like to work is to build principles and a foundation so each project is a bit easier.</p>
 <p>It’s kind of like climbing a mountain a little faster each time.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="dqt7xjxv4s2uecnb" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="5amzgi2h2fkvp92o" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -592,7 +672,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="15epw8nbnka5us91" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="a9inxqumfqo9hlkn" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       

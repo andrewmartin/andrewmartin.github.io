@@ -85,6 +85,90 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-soft-injecting-css" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/04/06/soft-injecting-css/" class="article-date">
+  <time datetime="2014-04-07T06:15:31.000Z" itemprop="datePublished">4/6/14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Front End Development/">Front End Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/04/06/soft-injecting-css/">Soft Injecting CSS</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div class = "is-edited" markdown = "1">This task has been changed. It’s now called <a href="https://www.npmjs.org/package/grunt-browser-sync" target="_blank">grunt-browser-sync</a>.</div>
+
+<p>I am a big fan (if you haven’t noticed in my prior posts) of optimizing my workflow. One thing I’ve never found until recently was a solid way to deal with styles and a live workflow. In comes <a href="https://www.npmjs.org/package/grunt-style-injector" target="_blank">grunt-style-injector</a>.</p>
+<p>The task is simple.</p>
+<figure class="highlight coffee"><figcaption><span>gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="attribute">styleinjector</span>:
+  <span class="attribute">files</span>:
+    <span class="attribute">src</span>: <span class="string">'css/application.css'</span>
+    <span class="attribute">options</span>:
+      <span class="attribute">watchTask</span>: <span class="literal">false</span>
+      <span class="attribute">debugInfo</span>: <span class="literal">true</span>
+</pre></td></tr></table></figure>
+
+<p>You simply type in:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre>⇒ grunt styleinjector
+Running <span class="string">"styleinjector:files"</span> (styleinjector) task
+   info  - socket.io started
+
+
+All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; tag <span class="keyword">in</span> your website.
+
+&lt;script src=<span class="string">'http://192.168.1.113:3000/socket.io/socket.io.js'</span>&gt;&lt;/script&gt;
+&lt;script src=<span class="string">'http://192.168.1.113:3001/style-injector-client.min.js'</span>&gt;&lt;/script&gt;
+</pre></td></tr></table></figure>
+
+<p>Put those snippets in your <code>index.html</code> (or partial of choice) and make sure you don’t commit said file, and you’re good to go. Since it’s framework agnostic, you can use whatever compilation process you want, and it never falsely reloads CSS (something I found) happened <em>all the time</em> with <code>LiveReload</code>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="tixsx73aw3hzdasy" class="article-share-link">Share</a>
+      
+        <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grunt/">grunt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sass/">sass</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/workflow/">workflow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-loops-and-mixins-in-sass" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/04/05/loops-and-mixins-in-sass/" class="article-date">
@@ -434,12 +518,12 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="5amzgi2h2fkvp92o" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="igag35cbr9ozzuvj" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sass/">sass</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/smacss/">smacss</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/less/">less</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sass/">sass</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/smacss/">smacss</a></li></ul>
 
     </footer>
   </div>
@@ -457,7 +541,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks, Hexo/">Frameworks, Hexo</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/">Frameworks</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/Hexo/">Hexo</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -466,7 +550,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt, sass, workflow/">grunt, sass, workflow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/less/">less</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/workflow/">workflow</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -475,7 +559,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: NaNpx;">blog</a><a href="/tags/grunt/" style="font-size: NaNpx;">grunt</a><a href="/tags/grunt, sass, workflow/" style="font-size: NaNpx;">grunt, sass, workflow</a><a href="/tags/sass/" style="font-size: NaNpx;">sass</a><a href="/tags/smacss/" style="font-size: NaNpx;">smacss</a>
+      <a href="/tags/blog/" style="font-size: 10.00px;">blog</a><a href="/tags/grunt/" style="font-size: 20.00px;">grunt</a><a href="/tags/hexo/" style="font-size: 10.00px;">hexo</a><a href="/tags/less/" style="font-size: 10.00px;">less</a><a href="/tags/sass/" style="font-size: 20.00px;">sass</a><a href="/tags/smacss/" style="font-size: 10.00px;">smacss</a><a href="/tags/workflow/" style="font-size: 10.00px;">workflow</a>
     </div>
   </div>
 

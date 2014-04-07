@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-04-07T18:15:49.415Z</updated>
+  <updated>2014-04-07T18:22:15.823Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/"/>
     <id>http://blog.andrewmart.in/2014/04/06/soft-injecting-css/</id>
     <published>2014-04-07T06:15:31.000Z</published>
-    <updated>2014-04-07T06:46:45.000Z</updated>
+    <updated>2014-04-07T18:21:34.000Z</updated>
     <content type="html"><![CDATA[<div class = "is-edited" markdown = "1">This task has been changed. It’s now called <a href="https://www.npmjs.org/package/grunt-browser-sync" target="_blank">grunt-browser-sync</a>.</div>
 
 <p>I am a big fan (if you haven’t noticed in my prior posts) of optimizing my workflow. One thing I’ve never found until recently was a solid way to deal with styles and a live workflow. In comes <a href="https://www.npmjs.org/package/grunt-style-injector" target="_blank">grunt-style-injector</a>.</p>
@@ -63,7 +63,13 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
 ]]></content>
     
     
-      <category term="grunt, sass, workflow" scheme="http://blog.andrewmart.in/tags/grunt,%20sass,%20workflow/"/>
+      <category term="grunt" scheme="http://blog.andrewmart.in/tags/grunt/"/>
+    
+      <category term="sass" scheme="http://blog.andrewmart.in/tags/sass/"/>
+    
+      <category term="workflow" scheme="http://blog.andrewmart.in/tags/workflow/"/>
+    
+      <category term="Front End Development" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/"/>
     
   </entry>
   
@@ -72,7 +78,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
     <link href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/"/>
     <id>http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/</id>
     <published>2014-04-07T00:51:01.000Z</published>
-    <updated>2014-04-07T18:13:53.000Z</updated>
+    <updated>2014-04-07T18:21:31.000Z</updated>
     <content type="html"><![CDATA[<p>I kicked off a project tonight and had a bunch of HTML files I wanted to open. I thought to myself, this has happened more than once, why not fire off a quick Grunt task?</p>
 <p>Let’s get this fired off:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre>1
@@ -150,6 +156,8 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     
       <category term="grunt" scheme="http://blog.andrewmart.in/tags/grunt/"/>
     
+      <category term="Front End Development" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/"/>
+    
   </entry>
   
   <entry>
@@ -157,7 +165,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     <link href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/"/>
     <id>http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/</id>
     <published>2014-04-05T23:29:18.000Z</published>
-    <updated>2014-04-07T18:15:19.000Z</updated>
+    <updated>2014-04-07T18:21:59.000Z</updated>
     <content type="html"><![CDATA[<p>The beauty of freelancing is twofold: you work on a lot of different projects simultaneously, and have to learn to quickly dive into a various set of systems at any given moment.</p>
 <p>One challenge I run into in my work is building scalable, modular CSS, and lately I’ve been making a strong effort to write more modular code.</p>
 <p>Here’s a pattern I ran into today. Say I want to add a simple spacer class that adds a little padding or margin on an element. I’d rather not have to do anything beyond editing the HTML markup, so let’s generate some CSS classes using a SASS <code>@each</code> loop.</p>
@@ -484,6 +492,8 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     
       <category term="smacss" scheme="http://blog.andrewmart.in/tags/smacss/"/>
     
+      <category term="less" scheme="http://blog.andrewmart.in/tags/less/"/>
+    
       <category term="Front End Development" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/"/>
     
   </entry>
@@ -493,7 +503,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     <link href="http://blog.andrewmart.in/2014/04/05/hello-world/"/>
     <id>http://blog.andrewmart.in/2014/04/05/hello-world/</id>
     <published>2014-04-05T23:23:05.000Z</published>
-    <updated>2014-04-07T01:04:08.000Z</updated>
+    <updated>2014-04-07T18:22:11.000Z</updated>
     <content type="html"><![CDATA[<p>After a long search, and coincidentally due to patience and timing, I’m finally making an effort to work on my blog. I’ve chosen a static site generator for the <a href="http://blog.guestlistapp.com/post/2304152860/five-reasons-to-use-a-static-site-generator-instead-of" target="_blank">many other reasons</a> out there, and so far, I have no regrets.</p>
 <p>I chose <a href="http://zespia.tw/hexo" target="_blank">Hexo</a> for one thing: speed. There are a ton of options out there, no doubt, and I started working in <a href="http://jekyllrb.com" target="_blank">Jekyll</a>, which I may be regretting down the road, but I must say that the millisecond generation process and overall ease of templating using EJS tags is definitely in my arena.</p>
 ]]></content>
@@ -501,7 +511,11 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     
       <category term="blog" scheme="http://blog.andrewmart.in/tags/blog/"/>
     
-      <category term="Frameworks, Hexo" scheme="http://blog.andrewmart.in/categories/Frameworks,%20Hexo/"/>
+      <category term="hexo" scheme="http://blog.andrewmart.in/tags/hexo/"/>
+    
+      <category term="Frameworks" scheme="http://blog.andrewmart.in/categories/Frameworks/"/>
+    
+      <category term="Hexo" scheme="http://blog.andrewmart.in/categories/Frameworks/Hexo/"/>
     
   </entry>
   

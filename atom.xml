@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-04-07T06:23:04.766Z</updated>
+  <updated>2014-04-07T06:47:49.471Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -19,8 +19,10 @@
     <link href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/"/>
     <id>http://blog.andrewmart.in/2014/04/06/soft-injecting-css/</id>
     <published>2014-04-07T06:15:31.000Z</published>
-    <updated>2014-04-07T06:19:56.000Z</updated>
-    <content type="html"><![CDATA[<p>I am a big fan (if you haven’t noticed in my prior posts) of optimizing my workflow. One thing I’ve never found until recently was a solid way to deal with styles and a live workflow. In comes <a href="https://www.npmjs.org/package/grunt-style-injector" target="_blank">grunt-style-injector</a>.</p>
+    <updated>2014-04-07T06:46:45.000Z</updated>
+    <content type="html"><![CDATA[<div class = "is-edited" markdown = "1">This task has been changed. It’s now called <a href="https://www.npmjs.org/package/grunt-browser-sync" target="_blank">grunt-browser-sync</a>.</div>
+
+<p>I am a big fan (if you haven’t noticed in my prior posts) of optimizing my workflow. One thing I’ve never found until recently was a solid way to deal with styles and a live workflow. In comes <a href="https://www.npmjs.org/package/grunt-style-injector" target="_blank">grunt-style-injector</a>.</p>
 <p>The task is simple.</p>
 <figure class="highlight coffee"><figcaption><span>gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
 2

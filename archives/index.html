@@ -152,17 +152,11 @@
 20
 21
 22
-23
-24
-25
-26
-</pre></td><td class="code"><pre><span class="comment">// compile stuff</span>
-gulp.task(<span class="string">"compile"</span>, [
+</pre></td><td class="code"><pre>gulp.task(<span class="string">"compile"</span>, [
   <span class="string">"coffee"</span>,
   <span class="string">"stylus"</span>
 ]);
 
-<span class="comment">// minify/compress.</span>
 gulp.task(<span class="string">"compress"</span>, [
   <span class="string">"concat_app"</span>,
   <span class="string">"concat_vendor"</span>,
@@ -170,14 +164,12 @@ gulp.task(<span class="string">"compress"</span>, [
   <span class="string">"cssmin"</span>
 ]);
 
-<span class="comment">// DEVELOP: basic watch task.</span>
 gulp.task(<span class="string">"default"</span>, [
   <span class="string">"compile"</span>,
   <span class="string">"compress"</span>,
   <span class="string">"watch"</span>
 ]);
 
-<span class="comment">// PRODUCTION: basic compilation step.</span>
 gulp.task(<span class="string">"build"</span>, [
   <span class="string">"compile"</span>,
   <span class="string">"compress"</span>
@@ -263,13 +255,6 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
 36
 37
 38
-39
-40
-41
-42
-43
-44
-45
 </pre></td><td class="code"><pre><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">"gulp"</span>),
   accord = <span class="built_in">require</span>(<span class="string">"gulp-accord"</span>),
   cssmin = <span class="built_in">require</span>(<span class="string">"gulp-minify-css"</span>),
@@ -277,9 +262,6 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
   notify = <span class="built_in">require</span>(<span class="string">"gulp-notify"</span>),
   livereload = <span class="built_in">require</span>(<span class="string">"gulp-livereload"</span>),
   stylus = <span class="built_in">require</span>(<span class="string">'gulp-stylus'</span>);
-<span class="comment">// stylus = function(opts) {</span>
-<span class="comment">//   return accord("stylus", opts);</span>
-<span class="comment">// };</span>
 
 module.exports = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   gulp.task(<span class="string">"stylus"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
@@ -297,11 +279,7 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
       }))
       .pipe(gulp.dest(<span class="string">"public/stylesheets"</span>))
       .pipe(livereload());
-    <span class="comment">// .pipe(cssmin())</span>
-    <span class="comment">// .pipe(rename("application.min.css"))</span>
-    <span class="comment">// .pipe(gulp.dest("public/stylesheets"));</span>
 
-    <span class="comment">// vendor</span>
     <span class="keyword">return</span> gulp.src(<span class="string">"public/stylesheets/styl/vendor.styl"</span>)
       .pipe(stylus({
         set: [
@@ -324,7 +302,7 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="c2gpc986k17av6cr" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="su137n6826sqprjs" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -408,7 +386,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="an8c6o054yki8ffn" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="5s6jmbl3fs6x4leo" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -524,7 +502,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="yxxq7r89y4y0uyxt" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="gixv8l37dqqrm8i9" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -897,7 +875,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="qfwxt7yt02a7enwm" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="ewl1u5oygsh01otr" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -943,7 +921,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="323lwlc89seyrbrg" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="mu3fpeg7ld59j5pq" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       

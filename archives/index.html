@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
   
   <title>Archives | Andrew Martin is a Web Developer</title>
 
@@ -85,6 +86,258 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-returning-streams-with-gulp" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/04/10/returning-streams-with-gulp/" class="article-date">
+  <time datetime="2014-04-10T20:38:36.000Z" itemprop="datePublished">4/10/14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Front End Development/">Front End Development</a>►<a class="article-category-link" href="/categories/Front End Development/Gulp/">Gulp</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/04/10/returning-streams-with-gulp/">Synchronous Streams with Gulp</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I’ve been a huge <a href="http://www.gruntjs.com" target="_blank">Grunt</a> fan for awhile now, and it wasn’t until recently that I started using an up and coming tool <a href="http://gulpjs.com/" target="_blank">Gulp</a> for my tasks.</p>
+<blockquote>
+<p>Special thanks to Dan Tello over at Viget for <a href="http://viget.com/extend/gulp-browserify-starter-faq" target="_blank">his post</a> that really inspired me to get into this.</p>
+</blockquote>
+<p>With Gulp, it’s all about the stream, man. You use asyncronous node <code>pipe</code> methods to chain streams together. It’s really tricky to understand if you’re not familiar with this concept, and it took me awhile (I’m still only now just <em>getting it</em> as I type).</p>
+<p>With Grunt, it’s all about configuration; with Gulp, it’s all about building your tasks dynamically. It only took me an hour or two to migrate an existing Gruntfile over to a gulpfile. Including a learning curve with a new framework, this isn’t too bad.</p>
+<p>I won’t dive too deep into it today, but one problem I ran into was with actually getting the tasks to finish before I started another one. It seemed like a bug, until I realized what was happening:</p>
+<blockquote>
+<p>Gulp was working so fast, one stream hadn’t finished in time for the other to occur.</p>
+</blockquote>
+<h5 id="Example:">Example:</h5>
+<p>A common use case for this is compiling CSS, then minifying it. Seems simple, right? With Grunt, you’d just stack the tasks together, and since Grunt runs them one at a time, you have no issues.</p>
+<figure class="highlight js"><figcaption><span>Gruntfile.js</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>grunt.registerTask(<span class="string">'default'</span>, [<span class="string">"coffee"</span>, <span class="string">"stylus"</span>, <span class="string">"jst"</span>, <span class="string">"concurrent:compress"</span>, <span class="string">"watch"</span>]);
+</pre></td></tr></table></figure>
+
+<p>With Gulp, however, it’s not quite as simple.</p>
+<p><em>Just an FYI here, I’m following Dan’s model of modularizing my tasks into individual files, hence the alternate filenames in the task definitions below. If you’re going with a basic setup, these can all live in your gulpfile.</em></p>
+<figure class="highlight js"><figcaption><span>gulpfile.js</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+</pre></td><td class="code"><pre><span class="comment">// compile stuff</span>
+gulp.task(<span class="string">"compile"</span>, [
+  <span class="string">"coffee"</span>,
+  <span class="string">"stylus"</span>
+]);
+
+<span class="comment">// minify/compress.</span>
+gulp.task(<span class="string">"compress"</span>, [
+  <span class="string">"concat_app"</span>,
+  <span class="string">"concat_vendor"</span>,
+  <span class="string">"uglify_vendor"</span>,
+  <span class="string">"cssmin"</span>
+]);
+
+<span class="comment">// DEVELOP: basic watch task.</span>
+gulp.task(<span class="string">"default"</span>, [
+  <span class="string">"compile"</span>,
+  <span class="string">"compress"</span>,
+  <span class="string">"watch"</span>
+]);
+
+<span class="comment">// PRODUCTION: basic compilation step.</span>
+gulp.task(<span class="string">"build"</span>, [
+  <span class="string">"compile"</span>,
+  <span class="string">"compress"</span>
+]);
+</pre></td></tr></table></figure>
+
+<p>This doesn’t work as you expect. If you remove all CSS files from your project and run <code>gulp build</code>, you’ll end up with a compiled CSS file, but no minified version. However, if you run <code>gulp build</code> again, you’ll get your minified version, because the CSS file is already there.</p>
+<p>Fortunately, gulp ships with an <code>orchestrator</code> that allows you to essentially specify <em>dependencies</em> that other tasks require. These dependencies are other Gulp tasks.</p>
+<p>To specify one, just add an array after you task name, as with my cssmin task below, where I’ve added <code>[&#39;stylus&#39;]</code>.</p>
+<h6 id="Cssmin_task:">Cssmin task:</h6>
+<figure class="highlight js"><figcaption><span>cssmin.js</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="code"><pre><span class="keyword">var</span> cssmin = <span class="built_in">require</span>(<span class="string">'gulp-cssmin'</span>),
+  rename = <span class="built_in">require</span>(<span class="string">'gulp-rename'</span>);
+
+module.exports = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">return</span> gulp.task(<span class="string">"cssmin"</span>, [<span class="string">'stylus'</span>], <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    gulp.src(<span class="string">"public/stylesheets/vendor.css"</span>)
+      .pipe(cssmin())
+      .pipe(rename(<span class="string">"vendor.min.css"</span>))
+      .pipe(gulp.dest(<span class="string">"public/stylesheets"</span>));
+
+    gulp.src(<span class="string">"public/stylesheets/application.css"</span>)
+      .pipe(cssmin())
+      .pipe(rename(<span class="string">"application.min.css"</span>))
+      .pipe(gulp.dest(<span class="string">"public/stylesheets"</span>));
+  });
+
+}
+</pre></td></tr></table></figure>
+
+<h6 id="Stylus_task:">Stylus task:</h6>
+<figure class="highlight js"><figcaption><span>stylus.js</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+</pre></td><td class="code"><pre><span class="keyword">var</span> gulp = <span class="built_in">require</span>(<span class="string">"gulp"</span>),
+  accord = <span class="built_in">require</span>(<span class="string">"gulp-accord"</span>),
+  cssmin = <span class="built_in">require</span>(<span class="string">"gulp-minify-css"</span>),
+  rename = <span class="built_in">require</span>(<span class="string">"gulp-rename"</span>),
+  notify = <span class="built_in">require</span>(<span class="string">"gulp-notify"</span>),
+  livereload = <span class="built_in">require</span>(<span class="string">"gulp-livereload"</span>),
+  stylus = <span class="built_in">require</span>(<span class="string">'gulp-stylus'</span>);
+<span class="comment">// stylus = function(opts) {</span>
+<span class="comment">//   return accord("stylus", opts);</span>
+<span class="comment">// };</span>
+
+module.exports = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  gulp.task(<span class="string">"stylus"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+    gulp.src(<span class="string">"public/stylesheets/styl/application.styl"</span>)
+      .pipe(stylus({
+        set: [
+          <span class="string">"resolve url"</span>,
+          <span class="string">"include-css"</span>,
+          <span class="string">"linenos"</span>,
+          <span class="string">"compress"</span>
+        ]
+      })).on(<span class="string">"error"</span>, notify.onError({
+        message: <span class="string">"&lt;%= error.message %&gt;"</span>,
+        title: <span class="string">"Stylus Error"</span>
+      }))
+      .pipe(gulp.dest(<span class="string">"public/stylesheets"</span>))
+      .pipe(livereload());
+    <span class="comment">// .pipe(cssmin())</span>
+    <span class="comment">// .pipe(rename("application.min.css"))</span>
+    <span class="comment">// .pipe(gulp.dest("public/stylesheets"));</span>
+
+    <span class="comment">// vendor</span>
+    <span class="keyword">return</span> gulp.src(<span class="string">"public/stylesheets/styl/vendor.styl"</span>)
+      .pipe(stylus({
+        set: [
+          <span class="string">"include css"</span>,
+          <span class="string">"linenos"</span>
+        ]
+      })).on(<span class="string">"error"</span>, notify.onError({
+        message: <span class="string">"&lt;%= error.message %&gt;"</span>,
+        title: <span class="string">"Stylus Error"</span>
+      }))
+      .pipe(gulp.dest(<span class="string">"public/stylesheets"</span>));
+  });
+};
+</pre></td></tr></table></figure>
+
+<p>Now for the tricky part. See on <code>line 33</code> where I’m returning the task itself? If you omit this line, the dependency is considered resolved and will never run. This line is super important and was confusing the hell out of me for quite awhile there, so I thought I’d share in case someone else ends up confused.</p>
+<p>Ideally, I could split this task into two separate task definitions, but for this project that was good enough. I always want my vendor to be compiled, and though it rarely changes, with Gulp the compilation was so fast it was not even noticeable without it.</p>
+<p>That’s all for today: make sure you return that stream!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="chcg4yuqi3g378ir" class="article-share-link">Share</a>
+      
+        <a href="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/build/">build</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gulp/">gulp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-soft-injecting-css" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/04/06/soft-injecting-css/" class="article-date">
@@ -155,7 +408,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="ocpdnz5nos2prjg9" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="b8lrlqnuksxz53d1" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -271,7 +524,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="nh6h8eemuk6i76lv" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="ihpcxhkbbovdbnp3" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -644,7 +897,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="qulnvj82rq6f0kz3" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="wzh7a3vemz9a9j79" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -690,7 +943,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="x1pisb32w1lhlvt2" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="vzjso3blugzmy1zk" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -713,7 +966,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/">Frameworks</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/Hexo/">Hexo</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">3</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/">Frameworks</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/Hexo/">Hexo</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Gulp/">Gulp</a><span class="category-list-count">1</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -722,7 +975,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/less/">less</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/workflow/">workflow</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/">build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/less/">less</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/workflow/">workflow</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -731,7 +984,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: 10.00px;">blog</a><a href="/tags/grunt/" style="font-size: 20.00px;">grunt</a><a href="/tags/hexo/" style="font-size: 10.00px;">hexo</a><a href="/tags/less/" style="font-size: 10.00px;">less</a><a href="/tags/sass/" style="font-size: 20.00px;">sass</a><a href="/tags/smacss/" style="font-size: 10.00px;">smacss</a><a href="/tags/workflow/" style="font-size: 10.00px;">workflow</a>
+      <a href="/tags/blog/" style="font-size: 10.00px;">blog</a><a href="/tags/build/" style="font-size: 10.00px;">build</a><a href="/tags/grunt/" style="font-size: 20.00px;">grunt</a><a href="/tags/gulp/" style="font-size: 10.00px;">gulp</a><a href="/tags/hexo/" style="font-size: 10.00px;">hexo</a><a href="/tags/less/" style="font-size: 10.00px;">less</a><a href="/tags/node/" style="font-size: 10.00px;">node</a><a href="/tags/sass/" style="font-size: 20.00px;">sass</a><a href="/tags/smacss/" style="font-size: 10.00px;">smacss</a><a href="/tags/workflow/" style="font-size: 10.00px;">workflow</a>
     </div>
   </div>
 
@@ -740,7 +993,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -750,6 +1003,10 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/04/10/returning-streams-with-gulp/">Synchronous Streams with Gulp</a>
+          </li>
         
           <li>
             <a href="/2014/04/06/soft-injecting-css/">Soft Injecting CSS</a>

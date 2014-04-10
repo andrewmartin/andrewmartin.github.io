@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-04-10T21:01:16.055Z</updated>
+  <updated>2014-04-10T21:02:11.783Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/"/>
     <id>http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/</id>
     <published>2014-04-10T20:38:36.000Z</published>
-    <updated>2014-04-10T21:01:07.000Z</updated>
+    <updated>2014-04-10T21:02:07.000Z</updated>
     <content type="html"><![CDATA[<p>I’ve been a huge <a href="http://www.gruntjs.com" target="_blank">Grunt</a> fan for awhile now, and it wasn’t until recently that I started using an up and coming tool <a href="http://gulpjs.com/" target="_blank">Gulp</a> for my tasks.</p>
 <blockquote>
 <p>Special thanks to Dan Tello over at Viget for <a href="http://viget.com/extend/gulp-browserify-starter-faq" target="_blank">his post</a> that really inspired me to get into this.</p>
@@ -93,7 +93,7 @@ gulp.task(<span class="string">"build"</span>, [
 </pre></td></tr></table></figure>
 
 <p>This doesn’t work as you expect. If you remove all CSS files from your project and run <code>gulp build</code>, you’ll end up with a compiled CSS file, but no minified version. However, if you run <code>gulp build</code> again, you’ll get your minified version, because the CSS file is already there.</p>
-<p>Fortunately, gulp ships with an <code>orchestrator</code> that allows you to essentially specify <em>dependencies</em> that other tasks require. These dependencies are other Gulp tasks.</p>
+<p>Fortunately, gulp ships with an <code>orchestrator</code> that allows you to essentially specify <em>dependencies</em> that other tasks require. These dependencies are other Gulp task definitions that return a stream.</p>
 <p>To specify one, just add an array after you task name, as with my cssmin task below, where I’ve added <code>[&#39;stylus&#39;]</code>.</p>
 <h6 id="Cssmin_task:">Cssmin task:</h6>
 <figure class="highlight js"><figcaption><span>cssmin.js</span></figcaption><table><tr><td class="gutter"><pre>1

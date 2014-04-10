@@ -185,7 +185,7 @@ gulp.task(<span class="string">"build"</span>, [
 </pre></td></tr></table></figure>
 
 <p>This doesn’t work as you expect. If you remove all CSS files from your project and run <code>gulp build</code>, you’ll end up with a compiled CSS file, but no minified version. However, if you run <code>gulp build</code> again, you’ll get your minified version, because the CSS file is already there.</p>
-<p>Fortunately, gulp ships with an <code>orchestrator</code> that allows you to essentially specify <em>dependencies</em> that other tasks require. These dependencies are other Gulp tasks.</p>
+<p>Fortunately, gulp ships with an <code>orchestrator</code> that allows you to essentially specify <em>dependencies</em> that other tasks require. These dependencies are other Gulp task definitions that return a stream.</p>
 <p>To specify one, just add an array after you task name, as with my cssmin task below, where I’ve added <code>[&#39;stylus&#39;]</code>.</p>
 <h6 id="Cssmin_task:">Cssmin task:</h6>
 <figure class="highlight js"><figcaption><span>cssmin.js</span></figcaption><table><tr><td class="gutter"><pre>1
@@ -324,7 +324,7 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="chcg4yuqi3g378ir" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="c2gpc986k17av6cr" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -408,7 +408,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="b8lrlqnuksxz53d1" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="an8c6o054yki8ffn" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -524,7 +524,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="ihpcxhkbbovdbnp3" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="yxxq7r89y4y0uyxt" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -897,7 +897,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="wzh7a3vemz9a9j79" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="qfwxt7yt02a7enwm" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -943,7 +943,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="vzjso3blugzmy1zk" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="323lwlc89seyrbrg" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       

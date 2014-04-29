@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-04-10T21:51:22.117Z</updated>
+  <updated>2014-04-29T05:25:46.041Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -13,6 +13,242 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Converting Gulp into Coffee]]></title>
+    <link href="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/"/>
+    <id>http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/</id>
+    <published>2014-04-29T05:12:04.000Z</published>
+    <updated>2014-04-29T05:25:11.000Z</updated>
+    <content type="html"><![CDATA[<p>I originally wrote all of my <code>Gulp</code> stuff using vanilla Javascript for one reason, and that was because from what I had seen, it was somewhat annoying to use Gulp with CoffeeScript, at least out of box.</p>
+<p>I had a friend show me a way to easily integrate CoffeeScript into Gulp, and I’m not looking back.</p>
+<p>If you didn’t notice before, I use a <a href="/2014/04/10/returning-streams-with-gulp/">modular approach</a> to organizing my Gulp, so I have quite a few JS files to convert. Needless to say, I didn’t want to have to do it manually, so I found some tools to help automate.</p>
+<p>Here’s how quickly you can do it:</p>
+<p>1) Install <a href="https://github.com/js2coffee/js2coffee" target="_blank">JS2Coffee</a>.</p>
+<figure class="highlight bash"><figcaption><span>shell</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>npm install -g js2coffee
+</pre></td></tr></table></figure>
+
+<p>2) Install <a href="http://stackoverflow.com/questions/14091818/converting-whole-project-to-coffeescript-with-js2coffee" target="_blank">this awesome script</a> to convert all of your Javascript into Coffee recursively within a directory.</p>
+<figure class="highlight bash"><figcaption><span>shell</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>$ touch /usr/local/bin/all2coffee
+$ vim /usr/local/bin/all2coffee
+<span class="comment"># (...insert code and save file, and set permissions)</span>
+</pre></td></tr></table></figure>
+
+<p>3) Convert all of your Javascript files and Gulpfile into CoffeeScript, then remove all the JS.</p>
+<figure class="highlight bash"><figcaption><span>shell</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>$ <span class="built_in">cd</span> gulp/
+$ all2coffee
+$ rm -rf **/*.js
+</pre></td></tr></table></figure>
+
+<p>4) Add a simple <code>Gulpfile.js</code> with this in it:</p>
+<figure class="highlight js"><figcaption><span>gulpfile.js</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre><span class="built_in">require</span>(<span class="string">'coffee-script/register'</span>);
+<span class="built_in">require</span>(<span class="string">'./gulpfile.coffee'</span>);
+</pre></td></tr></table></figure>
+
+<p>You should be good to go!</p>
+]]></content>
+    
+    
+      <category term="gulp" scheme="http://blog.andrewmart.in/tags/gulp/"/>
+    
+      <category term="coffeescript" scheme="http://blog.andrewmart.in/tags/coffeescript/"/>
+    
+      <category term="js2coffee" scheme="http://blog.andrewmart.in/tags/js2coffee/"/>
+    
+      <category term="Front End Development" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/"/>
+    
+      <category term="Tools" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/Tools/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Generating Style Guides with KSS]]></title>
+    <link href="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/"/>
+    <id>http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/</id>
+    <published>2014-04-13T03:21:39.000Z</published>
+    <updated>2014-04-13T04:02:45.000Z</updated>
+    <content type="html"><![CDATA[<p>Documenting style will always be a challenge. I think it’s up to you to decide the project’s balance between:</p>
+<ul>
+<li>The need for providing clear documentation.</li>
+<li>The practical use a styleguide would actually serve to the project’s stakeholders</li>
+</ul>
+<p>And here’s the key one I’ve usually found a challenge on most projects:</p>
+<p><em>For a style guide to be effective and worth your time,</em></p>
+<blockquote>
+<p>It takes the concern and vested interest of the other developers on the team to carefully contribute to the documentation, while sticking to a set of style structure and organization.</p>
+</blockquote>
+<p>This last one is always a problem. I’ve found that on the many projects I’ve been involved with, more often than not, the prjoect turns into a mess of tangled CSS code and rules. It doesn’t matter how well we structure the files and folders from the beginning; when push comes to shove, deadlines and pressure cause us to be messy developers. I’m guilty of it as well.</p>
+<p>On this particular project, the team already had a style guide set up using static HTML.  I knew there had to be a better way, and I found a perfect way to do it.</p>
+<p>That’s where <a href="http://warpspire.com/kss/" target="_blank">Knyle Style Sheets</a> come in. The developer, <a href="http://warpspire.com/" target="_blank">Kyle Neath</a> seems to enjoy the way <a href="https://github.com/styleguide" target="_blank">Github does it</a> and has created a nice solution to do it. It automatically parses your <code>.scss</code>, <code>.less</code>, or <code>.css</code> files when you write in the <a href="http://warpspire.com/kss/syntax/" target="_blank">approrpiate syntax</a> and generates some static HTML for you.</p>
+<p>Unfortunately, when it comes to the <code>grunt</code> and <code>node</code> stack, it was really tricky for me to get it spinning up.</p>
+<p>I ended up finding a winning combination: I used <a href="https://github.com/indieisaconcept/grunt-styleguide" target="_blank"><code>grunt-styleguide</code></a> and <a href="https://github.com/htanjo/kss-node-template" target="_blank">this awesome template</a>, plus a couple hacks to get it working.</p>
+<p>I’ll leave out the entire <code>Gruntfile</code>. Our project compiles styles from <code>assets/styles</code> into the <code>public/css/</code> directory.</p>
+<h6 id="<code>styleguide</code>_task:"><code>styleguide</code> task:</h6>
+<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre><span class="attribute">styleguide</span>:
+  <span class="attribute">options</span>:
+    <span class="attribute">template</span>:
+      <span class="attribute">src</span>: <span class="string">'assets/vendor/styleguide-template'</span>
+    <span class="attribute">framework</span>:
+      <span class="attribute">name</span>: <span class="string">'kss'</span>
+      <span class="attribute">options</span>:
+        <span class="attribute">includeType</span>: <span class="string">'sass'</span>
+        <span class="attribute">includePath</span>: <span class="string">'public/css/application.css'</span>
+  <span class="attribute">all</span>:
+    <span class="attribute">files</span>: [<span class="string">'_styleguide'</span>: <span class="string">'assets/styles/**/*.scss'</span>]
+</pre></td></tr></table></figure>
+
+<p><code>assets/vendor/styleguide-template</code> is a clone of the template repo mentioned earlier, with some minor customizations to the template.</p>
+<p>This task generates static HTML/CSS for a styleguide into the <code>_styleguide</code> directory.</p>
+<p>The tricky part was getting my styles to show up in the outputted code. Unfortuantely, though the <code>grunt-styleguide</code> docs say you can run precompiled code through and it will take care of the rest, no matter how hard I tried, that didn’t work.</p>
+<p>In the end, it was just a simple matter of adding to my <code>copy</code> and <code>watch</code> tasks to copy the compiled CSS over.</p>
+<h5 id="<code>watch</code>_task:"><code>watch</code> task:</h5>
+<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="code"><pre><span class="attribute">watch</span>:
+  <span class="attribute">options</span>:
+    <span class="attribute">livereload</span>: <span class="literal">false</span>
+    <span class="attribute">spawn</span>: <span class="literal">false</span>
+
+  <span class="string">'sass-application'</span>:
+    <span class="attribute">livereload</span>: <span class="literal">false</span>
+    <span class="attribute">files</span>: [
+      <span class="string">'assets/styles/application.scss'</span>,
+      <span class="string">'assets/styles/**/*.scss'</span>
+    ]
+    <span class="attribute">tasks</span>: [<span class="string">'sass:application'</span>, <span class="string">'copy:styles'</span>, <span class="string">'styleguide'</span>]
+</pre></td></tr></table></figure>
+
+<h5 id="<code>copy:styles</code>_task:"><code>copy:styles</code> task:</h5>
+<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="attribute">copy</span>:
+  <span class="attribute">styles</span>:
+    <span class="attribute">files</span>: [
+      <span class="attribute">expand</span>: <span class="literal">true</span>
+      <span class="attribute">cwd</span>: <span class="string">'public/css'</span>
+      <span class="attribute">src</span>: <span class="string">'**/*'</span>
+      <span class="attribute">dest</span>: <span class="string">'_styleguide/css'</span>
+    ]
+</pre></td></tr></table></figure>
+
+<p>As a bonus, add <code>grunt-contrib-connect</code> and have it boot up a little preview server. This was helpful on a project I was running because <code>index.html</code> wasn’t accessible.</p>
+<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="attribute">connect</span>:
+  <span class="attribute">styleguide</span>:
+    <span class="attribute">options</span>:
+      <span class="attribute">port</span>: <span class="number">9001</span>
+      <span class="attribute">base</span>: <span class="string">'_styleguide'</span>
+      <span class="attribute">keepalive</span>: <span class="literal">true</span>
+      <span class="attribute">open</span>:
+        <span class="attribute">target</span>: <span class="string">'http://localhost:9001'</span>
+        <span class="attribute">appName</span>: <span class="string">'Google Chrome'</span>
+</pre></td></tr></table></figure>
+
+<p>Pretty cool, huh? Now, in my <code>_modules.scss</code> file, I can add this before the code block I want to add:</p>
+<figure class="highlight sass"><figcaption><span>_modules.scss</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="comment">// Spacer</span>
+<span class="comment">//</span>
+<span class="comment">// A basic separator element to break up sections.</span>
+<span class="comment">//</span>
+<span class="comment">// Markup: &lt;div class="spacer"&gt;&lt;/div&gt;</span>
+<span class="comment">//</span>
+<span class="comment">// Styleguide 2.1</span>
+</pre></td></tr></table></figure>
+
+<p>The <code>kss-node</code> project is pretty finicky, but when it works, it’s awesome. You can add modifier classes, and it will generate nice code samples and output for each of those modifier classes. You can even add markdown within your descriptions.</p>
+<figure class="highlight sass"><figcaption><span>_modules.sass</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre><span class="comment">// Alerts</span>
+<span class="comment">//</span>
+<span class="comment">// Indicate failure or success. &lt;em&gt;Required: `alert-success` or `alert-error`&lt;/em&gt;</span>
+<span class="comment">//</span>
+<span class="comment">// Markup: &lt;div class="alert {$modifiers}"&gt;You mistyped your password.&lt;/div&gt;</span>
+<span class="comment">//</span>
+<span class="comment">// .alert-error - Indicate an error</span>
+<span class="comment">// .alert-success - Indicate success</span>
+<span class="comment">//</span>
+<span class="comment">// Styleguide 2.2</span>
+</pre></td></tr></table></figure>
+
+<h6 id="Screenshot:">Screenshot:</h6>
+<img src="/images/sample-kss-output.jpg">
+
+
+<p>If you find things aren’t working, check to make sure you’re numbering things in the right order, that you haven’t already documented a section. I had to move a few of my sections around to match the order of the <code>@import</code> statements in my main <code>.scss</code> file.</p>
+<p>You can pretty quickly and easily customize that template as well, if needed.</p>
+<p>Here’s to hoping this helps our team stay on a solid set of rules and continued documentation!</p>
+]]></content>
+    
+    
+      <category term="node" scheme="http://blog.andrewmart.in/tags/node/"/>
+    
+      <category term="kss" scheme="http://blog.andrewmart.in/tags/kss/"/>
+    
+      <category term="css" scheme="http://blog.andrewmart.in/tags/css/"/>
+    
+      <category term="Front End Development" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/"/>
+    
+      <category term="Tools" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/Tools/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Synchronous Streams with Gulp]]></title>

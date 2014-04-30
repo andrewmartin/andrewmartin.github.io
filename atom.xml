@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-04-29T05:25:46.041Z</updated>
+  <updated>2014-04-30T20:41:44.801Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -604,12 +604,14 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   </entry>
   
   <entry>
-    <title><![CDATA[Loops and Mixins in SASS]]></title>
+    <title><![CDATA[Loops and Mixins in SASS and Stylus]]></title>
     <link href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/"/>
     <id>http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/</id>
     <published>2014-04-05T23:29:18.000Z</published>
-    <updated>2014-04-07T19:13:59.000Z</updated>
-    <content type="html"><![CDATA[<p>The beauty of freelancing is twofold: you work on a lot of different projects simultaneously, and have to learn to quickly dive into a various set of systems at any given moment.</p>
+    <updated>2014-04-30T20:41:40.000Z</updated>
+    <content type="html"><![CDATA[<div class = "is-edited" markdown = "1">Check out how easy this is to do with Stylus; added instructions and example at the end of this post.</div>
+
+<p>The beauty of freelancing is twofold: you work on a lot of different projects simultaneously, and have to learn to quickly dive into a various set of systems at any given moment.</p>
 <p>One challenge I run into in my work is building scalable, modular CSS, and lately I’ve been making a strong effort to write more modular code.</p>
 <p>Here’s a pattern I ran into today. Say I want to add a simple spacer class that adds a little padding or margin on an element. I’d rather not have to do anything beyond editing the HTML markup, so let’s generate some CSS classes using a SASS <code>@each</code> loop.</p>
 <p>My first take was to set up some <code>$spaceamounts</code>, then generate a few mixins:</p>
@@ -936,6 +938,47 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
 <span class="rule"><span class="attribute">...</span></span></span>
 </pre></td></tr></table></figure>
 
+<h3 id="Bonus:_Stylus">Bonus: Stylus</h3>
+<p>I ran into a challenge with <code>Stylus</code> and found it was even easier to do there:</p>
+<figure class="highlight styl"><figcaption><span>_helpers.styl</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre>sizes = <span class="number">5</span> <span class="number">10</span> <span class="number">15</span> <span class="number">20</span> <span class="number">25</span> <span class="number">30</span> <span class="number">35</span> <span class="number">40</span> <span class="number">45</span> <span class="number">50</span>
+<span class="keyword">for</span> <span class="built_in">num</span> <span class="operator">in</span> sizes
+  .mb-{<span class="built_in">num</span>}
+    margin-bottom: unit(<span class="built_in">num</span>, px)
+  .mt-{<span class="built_in">num</span>}
+    margin-top: unit(<span class="built_in">num</span>, px)
+  .ml-{<span class="built_in">num</span>}
+    margin-left: unit(<span class="built_in">num</span>, px)
+  .mr-{<span class="built_in">num</span>}
+    margin-<span class="constant">right</span>: unit(<span class="built_in">num</span>, px)
+  .pb-{<span class="built_in">num</span>}
+    padding-bottom: unit(<span class="built_in">num</span>, px)
+  .pt-{<span class="built_in">num</span>}
+    padding-top: unit(<span class="built_in">num</span>, px)
+  .pl-{<span class="built_in">num</span>}
+    padding-left: unit(<span class="built_in">num</span>, px)
+  .pr-{<span class="built_in">num</span>}
+    padding-<span class="constant">right</span>: unit(<span class="built_in">num</span>, px)
+</pre></td></tr></table></figure>
+
+<p>Boom, you can generate them all with only a few lines of code.</p>
 <p>This entire approach follows the pattern and way I like to work is to build principles and a foundation so each project is a bit easier.</p>
 <p>It’s kind of like climbing a mountain a little faster each time.</p>
 ]]></content>

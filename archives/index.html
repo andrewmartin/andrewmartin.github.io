@@ -151,7 +151,7 @@ $ rm -rf **/*.js
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/" data-id="6cefglmt104gzwz6" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/" data-id="mtalfb26uot6fq5f" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -354,7 +354,7 @@ $ rm -rf **/*.js
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/" data-id="1gwx8opl7hn8iz1j" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/" data-id="ell20ymh6ki7czm7" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -584,7 +584,7 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="2xbs00p56gn359ov" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="63fy1te52uou2qnv" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -668,7 +668,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="o02jdp347n5ivam8" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="h7riubkrj1ckv81o" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -784,7 +784,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="fmczakh5ilnctfss" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="pyzp7q1fuayx21hs" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -816,7 +816,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/05/loops-and-mixins-in-sass/">Loops and Mixins in SASS</a>
+      <a class="article-title" href="/2014/04/05/loops-and-mixins-in-sass/">Loops and Mixins in SASS and Stylus</a>
     </h1>
   
 
@@ -824,7 +824,9 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>The beauty of freelancing is twofold: you work on a lot of different projects simultaneously, and have to learn to quickly dive into a various set of systems at any given moment.</p>
+        <div class = "is-edited" markdown = "1">Check out how easy this is to do with Stylus; added instructions and example at the end of this post.</div>
+
+<p>The beauty of freelancing is twofold: you work on a lot of different projects simultaneously, and have to learn to quickly dive into a various set of systems at any given moment.</p>
 <p>One challenge I run into in my work is building scalable, modular CSS, and lately I’ve been making a strong effort to write more modular code.</p>
 <p>Here’s a pattern I ran into today. Say I want to add a simple spacer class that adds a little padding or margin on an element. I’d rather not have to do anything beyond editing the HTML markup, so let’s generate some CSS classes using a SASS <code>@each</code> loop.</p>
 <p>My first take was to set up some <code>$spaceamounts</code>, then generate a few mixins:</p>
@@ -1151,13 +1153,54 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
 <span class="rule"><span class="attribute">...</span></span></span>
 </pre></td></tr></table></figure>
 
+<h3 id="Bonus:_Stylus">Bonus: Stylus</h3>
+<p>I ran into a challenge with <code>Stylus</code> and found it was even easier to do there:</p>
+<figure class="highlight styl"><figcaption><span>_helpers.styl</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre>sizes = <span class="number">5</span> <span class="number">10</span> <span class="number">15</span> <span class="number">20</span> <span class="number">25</span> <span class="number">30</span> <span class="number">35</span> <span class="number">40</span> <span class="number">45</span> <span class="number">50</span>
+<span class="keyword">for</span> <span class="built_in">num</span> <span class="operator">in</span> sizes
+  .mb-{<span class="built_in">num</span>}
+    margin-bottom: unit(<span class="built_in">num</span>, px)
+  .mt-{<span class="built_in">num</span>}
+    margin-top: unit(<span class="built_in">num</span>, px)
+  .ml-{<span class="built_in">num</span>}
+    margin-left: unit(<span class="built_in">num</span>, px)
+  .mr-{<span class="built_in">num</span>}
+    margin-<span class="constant">right</span>: unit(<span class="built_in">num</span>, px)
+  .pb-{<span class="built_in">num</span>}
+    padding-bottom: unit(<span class="built_in">num</span>, px)
+  .pt-{<span class="built_in">num</span>}
+    padding-top: unit(<span class="built_in">num</span>, px)
+  .pl-{<span class="built_in">num</span>}
+    padding-left: unit(<span class="built_in">num</span>, px)
+  .pr-{<span class="built_in">num</span>}
+    padding-<span class="constant">right</span>: unit(<span class="built_in">num</span>, px)
+</pre></td></tr></table></figure>
+
+<p>Boom, you can generate them all with only a few lines of code.</p>
 <p>This entire approach follows the pattern and way I like to work is to build principles and a foundation so each project is a bit easier.</p>
 <p>It’s kind of like climbing a mountain a little faster each time.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="qupk8akd8fhhihz9" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="1rpwvuhx9p0ub458" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1203,7 +1246,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="xvr29d27f6ucyuwx" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="zkaitj5gvx29taou" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       

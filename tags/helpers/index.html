@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
   
-  <title>Soft Injecting CSS | Andrew Martin is a Web Developer</title>
+  <title>Tag: helpers | Andrew Martin is a Web Developer</title>
 
   <meta name="description" content="Andrew Martin is a web developer who is infatuated with building beautiful applications. This is his blog." />
 
@@ -15,13 +15,11 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="og:type" content="blog">
-<meta name="og:title" content="Soft Injecting CSS">
-<meta name="og:url" content="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/">
+<meta name="og:title">
+<meta name="og:url" content="http://blog.andrewmart.in/tags/helpers/">
 <meta name="og:image">
 <meta name="og:site_name" content="Andrew Martin is a Web Developer">
-<meta name="og:description" content="This task has been changed. It’s now called grunt-browser-sync.
-
-I am a big fan (if you haven’t noticed in my prior posts) of optimizing my workflow. One thing I’ve never found until recently was a so">
+<meta name="og:description">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Andrew Martin is a Web Developer" type="application/atom+xml">
@@ -86,14 +84,16 @@ I am a big fan (if you haven’t noticed in my prior posts) of optimizing my wor
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-soft-injecting-css" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main">
+  
+    <article id="post-speeding-up-wordpress-with-helpers" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/04/06/soft-injecting-css/" class="article-date">
-  <time datetime="2014-04-07T06:15:31.000Z" itemprop="datePublished">4/6/14</time>
+    <a href="/2014/05/05/speeding-up-wordpress-with-helpers/" class="article-date">
+  <time datetime="2014-05-05T07:36:15.000Z" itemprop="datePublished">5/5/14</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Front End Development/">Front End Development</a>
+    <a class="article-category-link" href="/categories/WordPress/">WordPress</a>
   </div>
 
   </div>
@@ -103,8 +103,8 @@ I am a big fan (if you haven’t noticed in my prior posts) of optimizing my wor
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      Soft Injecting CSS
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/05/speeding-up-wordpress-with-helpers/">Speeding Up WordPress, Advanced Custom Fields, and more with helper functions</a>
     </h1>
   
 
@@ -112,26 +112,17 @@ I am a big fan (if you haven’t noticed in my prior posts) of optimizing my wor
     
     <div class="article-entry" itemprop="articleBody">
       
-        <div class = "is-edited" markdown = "1">This task has been changed. It’s now called <a href="https://www.npmjs.org/package/grunt-browser-sync" target="_blank">grunt-browser-sync</a>.</div>
-
-<p>I am a big fan (if you haven’t noticed in my prior posts) of optimizing my workflow. One thing I’ve never found until recently was a solid way to deal with styles and a live workflow. In comes <a href="https://www.npmjs.org/package/grunt-style-injector" target="_blank">grunt-style-injector</a>.</p>
-<p>The task is simple.</p>
-<figure class="highlight coffee"><figcaption><span>gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-</pre></td><td class="code"><pre><span class="attribute">styleinjector</span>:
-  <span class="attribute">files</span>:
-    <span class="attribute">src</span>: <span class="string">'css/application.css'</span>
-    <span class="attribute">options</span>:
-      <span class="attribute">watchTask</span>: <span class="literal">false</span>
-      <span class="attribute">debugInfo</span>: <span class="literal">true</span>
+        <p>I don’t particularly love working in WordPress, because at this point I feel everything I’ve ever needed to do, I’ve done many times before. I’ve just seen about everything imagineable when it comes to WordPress development, and until tonight thought it was mostly a cut and run kind of deal.</p>
+<p>With a recent project I’ve been focusing on really, really optimizing and elegantly developing my theme using DRY code. It’s been an admittedly fun process seeing my templates completely dry up, and while PHP is often messy (it’s official, I now hate semicolons, by the way) it has saved me quite a bit of time rolling boilerplate code.</p>
+<p>I’m using the awesome <a href="http://www.advancedcustomfields.com/" target="_blank">Advanced Custom Fields</a> plugin, which I have to give credit to Elliot Condon for. He’s really made a powerful system that in my opinion is one of the best open-sourced CMS platforms I’ve ever seen. It’s quite incredible what you can do with it now, really.</p>
+<p>Here are a few examples of tricky things I’ve integrated into my theme that have helped save tons of time:</p>
+<h5 id="Button_helper:">Button helper:</h5>
+<p><em>Outputs a quick button with optional internal page-link or external options. That there saved me 10 lines of boilerplate code.</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_custom_field_link(<span class="string">'btn btn-primary'</span>); <span class="preprocessor">?&gt;</span></span>
 </pre></td></tr></table></figure>
 
-<p>You simply type in:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre>1
+<figure class="highlight php"><figcaption><span>functions-custom.php</span></figcaption><table><tr><td class="gutter"><pre>1
 2
 3
 4
@@ -140,61 +131,160 @@ I am a big fan (if you haven’t noticed in my prior posts) of optimizing my wor
 7
 8
 9
-</pre></td><td class="code"><pre>⇒ grunt styleinjector
-Running <span class="string">"styleinjector:files"</span> (styleinjector) task
-   info  - socket.io started
-
-
-All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; tag <span class="keyword">in</span> your website.
-
-&lt;script src=<span class="string">'http://192.168.1.113:3000/socket.io/socket.io.js'</span>&gt;&lt;/script&gt;
-&lt;script src=<span class="string">'http://192.168.1.113:3001/style-injector-client.min.js'</span>&gt;&lt;/script&gt;
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="comment">/**
+ * custom field link helper
+ *<span class="phpdoc"> @param</span>  string $className
+ *         add a custom class name to element
+ *<span class="phpdoc"> @return</span> string
+ *         returns button text for view.
+ */</span>
+<span class="function"><span class="keyword">function</span> <span class="title">_s_custom_field_link</span><span class="params">(<span class="variable">$className</span>)</span> {</span>
+  <span class="variable">$text</span> = get_sub_field(<span class="string">'button_text'</span>);
+  <span class="keyword">if</span> (!<span class="variable">$className</span>) {
+    <span class="variable">$className</span> = <span class="string">'btn btn-primary'</span>;
+  }
+  <span class="keyword">if</span> (get_sub_field(<span class="string">'external_button_link'</span>)) {
+    <span class="comment">// external link stuff</span>
+    <span class="variable">$link</span> = get_sub_field(<span class="string">'external_button_link'</span>);
+  } <span class="keyword">else</span> {
+    <span class="variable">$link</span> = get_sub_field(<span class="string">'button_link'</span>);
+  }
+  <span class="comment">// echo "&lt;a href="$link"&gt;$text&lt;/a&gt;";</span>
+  <span class="keyword">echo</span> <span class="string">"&lt;a class='$className' href='$link'&gt;$text&lt;/a&gt;"</span>;
+}
 </pre></td></tr></table></figure>
 
-<p>Put those snippets in your <code>index.html</code> (or partial of choice) and make sure you don’t commit said file, and you’re good to go. Since it’s framework agnostic, you can use whatever compilation process you want, and it never falsely reloads CSS (something I found) happened <em>all the time</em> with <code>LiveReload</code>.</p>
+<h5 id="Field_conditional">Field conditional</h5>
+<p><em>Or take this for example, which I’ve found I do a lot. Say I want to have a field displayed, wrapped in an HTML tag, only if it’s present. And I want to avoid writing <code>get_field</code> vs. <code>get_sub_field</code> every time:</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_custom_field(<span class="string">'title'</span>, <span class="string">'h2'</span>, <span class="string">'title'</span>, <span class="keyword">true</span>); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">_s_custom_field</span><span class="params">(<span class="variable">$name</span>, <span class="variable">$tag</span>, <span class="variable">$class</span> = <span class="string">''</span>, <span class="variable">$subField</span> = false)</span> {</span>
+  <span class="keyword">if</span> (<span class="variable">$subField</span>) {
+    <span class="variable">$function</span> = get_sub_field;
+  } <span class="keyword">else</span> {
+    <span class="variable">$function</span> = get_field;
+  }
+  <span class="keyword">if</span> (<span class="variable">$function</span>(<span class="variable">$name</span>)) {
+    <span class="variable">$str</span> = <span class="string">''</span>;
+    <span class="variable">$str</span> .= <span class="string">"&lt;{$tag} class='{$class}'&gt;"</span>;
+    <span class="variable">$str</span> .= <span class="variable">$function</span>(<span class="variable">$name</span>);
+    <span class="variable">$str</span> .= <span class="string">"&lt;/{$tag}&gt;"</span>;
+    <span class="keyword">echo</span> <span class="variable">$str</span>;
+  }
+}
+</pre></td></tr></table></figure>
+
+<p>Link conditional, magic.</p>
+<h5 id="Grid_wrappers">Grid wrappers</h5>
+<p><em>..or, avoid the semi-annoying Bootstrap grid wrappers:</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_grid_wrapper_start(<span class="string">'col-md-6'</span>, <span class="keyword">true</span>, <span class="string">'hero'</span>); <span class="preprocessor">?&gt;</span></span>
+  <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Hi, I am inside the <span class="tag">&lt;<span class="title">code</span>&gt;</span>.col-md-6<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+<span class="php"><span class="preprocessor">&lt;?php</span> _s_grid_wrapper_end(); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">_s_grid_wrapper_start</span><span class="params">(<span class="variable">$className</span> = <span class="string">"col-md-12"</span>, <span class="variable">$container</span> = true, <span class="variable">$containerClassName</span> = <span class="string">""</span>)</span> {</span>
+  <span class="keyword">if</span> (<span class="variable">$container</span>) {
+    <span class="keyword">echo</span> <span class="string">"&lt;div class='container'&gt;"</span>;
+  }
+  <span class="keyword">echo</span> <span class="string">"&lt;div class='row'&gt;"</span>
+  .<span class="string">"&lt;div class='$className'&gt;"</span>;
+}
+<span class="comment">// grid wrapper end</span>
+<span class="function"><span class="keyword">function</span> <span class="title">_s_grid_wrapper_end</span><span class="params">(<span class="variable">$container</span> = true)</span> {</span>
+  <span class="keyword">echo</span> <span class="string">"&lt;/div&gt; &lt;!-- .col- --&gt;"</span>
+  .<span class="string">"&lt;/div&gt; &lt;!-- .row --&gt;"</span>;
+  <span class="keyword">if</span> (<span class="variable">$container</span>) {
+    <span class="keyword">echo</span> <span class="string">"&lt;/div&gt; &lt;!-- .container --&gt;"</span>;
+  }
+}
+</pre></td></tr></table></figure>
+
+<p>Voila, grid-ified:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container hero"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"col-md-6"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Hi, I am inside the <span class="tag">&lt;<span class="title">code</span>&gt;</span>.col-md-6<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>Just a few examples of using <code>functions.php</code> to help me cut up on writing code over and over again.</p>
+<blockquote>
+<p>Side note: While working on this, I had an idea that would make it even more smooth. I’d love to see someone using Gulp and with a bleeding edge mentality develop a boilerplate theme using JADE templates or the otherwise. Any takers? Anyone out there trying to write advanced themes using WordPress?</p>
+</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="bh5w3jhet215gsqf" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/" data-id="o4bpvclgro66s2iu" class="article-share-link">Share</a>
       
-        <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/grunt/">grunt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sass/">sass</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/workflow/">workflow</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/advanced custom fields/">advanced custom fields</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/helpers/">helpers</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
 
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2014/04/10/returning-streams-with-gulp/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Synchronous Streams with Gulp
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Open files recursively with a Simple Grunt task.</div>
-    </a>
-  
-</nav>
-
-  
 </article>
 
 
-<section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
+  
+  
 </section>
         
           <aside id="sidebar">
@@ -292,13 +382,11 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
 <script>
   var disqus_shortname = 'andrewmartin';
   
-  var disqus_url = 'http://blog.andrewmart.in/2014/04/06/soft-injecting-css/';
-  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//go.disqus.com/embed.js';
+    dsq.src = '//go.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

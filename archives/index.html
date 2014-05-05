@@ -86,6 +86,204 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-speeding-up-wordpress-with-helpers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/05/speeding-up-wordpress-with-helpers/" class="article-date">
+  <time datetime="2014-05-05T07:36:15.000Z" itemprop="datePublished">5/5/14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/WordPress/">WordPress</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/05/speeding-up-wordpress-with-helpers/">Speeding Up WordPress, Advanced Custom Fields, and more with helper functions</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I don’t particularly love working in WordPress, because at this point I feel everything I’ve ever needed to do, I’ve done many times before. I’ve just seen about everything imagineable when it comes to WordPress development, and until tonight thought it was mostly a cut and run kind of deal.</p>
+<p>With a recent project I’ve been focusing on really, really optimizing and elegantly developing my theme using DRY code. It’s been an admittedly fun process seeing my templates completely dry up, and while PHP is often messy (it’s official, I now hate semicolons, by the way) it has saved me quite a bit of time rolling boilerplate code.</p>
+<p>I’m using the awesome <a href="http://www.advancedcustomfields.com/" target="_blank">Advanced Custom Fields</a> plugin, which I have to give credit to Elliot Condon for. He’s really made a powerful system that in my opinion is one of the best open-sourced CMS platforms I’ve ever seen. It’s quite incredible what you can do with it now, really.</p>
+<p>Here are a few examples of tricky things I’ve integrated into my theme that have helped save tons of time:</p>
+<h5 id="Button_helper:">Button helper:</h5>
+<p><em>Outputs a quick button with optional internal page-link or external options. That there saved me 10 lines of boilerplate code.</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_custom_field_link(<span class="string">'btn btn-primary'</span>); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions-custom.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="comment">/**
+ * custom field link helper
+ *<span class="phpdoc"> @param</span>  string $className
+ *         add a custom class name to element
+ *<span class="phpdoc"> @return</span> string
+ *         returns button text for view.
+ */</span>
+<span class="function"><span class="keyword">function</span> <span class="title">_s_custom_field_link</span><span class="params">(<span class="variable">$className</span>)</span> {</span>
+  <span class="variable">$text</span> = get_sub_field(<span class="string">'button_text'</span>);
+  <span class="keyword">if</span> (!<span class="variable">$className</span>) {
+    <span class="variable">$className</span> = <span class="string">'btn btn-primary'</span>;
+  }
+  <span class="keyword">if</span> (get_sub_field(<span class="string">'external_button_link'</span>)) {
+    <span class="comment">// external link stuff</span>
+    <span class="variable">$link</span> = get_sub_field(<span class="string">'external_button_link'</span>);
+  } <span class="keyword">else</span> {
+    <span class="variable">$link</span> = get_sub_field(<span class="string">'button_link'</span>);
+  }
+  <span class="comment">// echo "&lt;a href="$link"&gt;$text&lt;/a&gt;";</span>
+  <span class="keyword">echo</span> <span class="string">"&lt;a class='$className' href='$link'&gt;$text&lt;/a&gt;"</span>;
+}
+</pre></td></tr></table></figure>
+
+<h5 id="Field_conditional">Field conditional</h5>
+<p><em>Or take this for example, which I’ve found I do a lot. Say I want to have a field displayed, wrapped in an HTML tag, only if it’s present. And I want to avoid writing <code>get_field</code> vs. <code>get_sub_field</code> every time:</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_custom_field(<span class="string">'title'</span>, <span class="string">'h2'</span>, <span class="string">'title'</span>, <span class="keyword">true</span>); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">_s_custom_field</span><span class="params">(<span class="variable">$name</span>, <span class="variable">$tag</span>, <span class="variable">$class</span> = <span class="string">''</span>, <span class="variable">$subField</span> = false)</span> {</span>
+  <span class="keyword">if</span> (<span class="variable">$subField</span>) {
+    <span class="variable">$function</span> = get_sub_field;
+  } <span class="keyword">else</span> {
+    <span class="variable">$function</span> = get_field;
+  }
+  <span class="keyword">if</span> (<span class="variable">$function</span>(<span class="variable">$name</span>)) {
+    <span class="variable">$str</span> = <span class="string">''</span>;
+    <span class="variable">$str</span> .= <span class="string">"&lt;{$tag} class='{$class}'&gt;"</span>;
+    <span class="variable">$str</span> .= <span class="variable">$function</span>(<span class="variable">$name</span>);
+    <span class="variable">$str</span> .= <span class="string">"&lt;/{$tag}&gt;"</span>;
+    <span class="keyword">echo</span> <span class="variable">$str</span>;
+  }
+}
+</pre></td></tr></table></figure>
+
+<p>Link conditional, magic.</p>
+<h5 id="Grid_wrappers">Grid wrappers</h5>
+<p><em>..or, avoid the semi-annoying Bootstrap grid wrappers:</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_grid_wrapper_start(<span class="string">'col-md-6'</span>, <span class="keyword">true</span>, <span class="string">'hero'</span>); <span class="preprocessor">?&gt;</span></span>
+  <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Hi, I am inside the <span class="tag">&lt;<span class="title">code</span>&gt;</span>.col-md-6<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+<span class="php"><span class="preprocessor">&lt;?php</span> _s_grid_wrapper_end(); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">_s_grid_wrapper_start</span><span class="params">(<span class="variable">$className</span> = <span class="string">"col-md-12"</span>, <span class="variable">$container</span> = true, <span class="variable">$containerClassName</span> = <span class="string">""</span>)</span> {</span>
+  <span class="keyword">if</span> (<span class="variable">$container</span>) {
+    <span class="keyword">echo</span> <span class="string">"&lt;div class='container'&gt;"</span>;
+  }
+  <span class="keyword">echo</span> <span class="string">"&lt;div class='row'&gt;"</span>
+  .<span class="string">"&lt;div class='$className'&gt;"</span>;
+}
+<span class="comment">// grid wrapper end</span>
+<span class="function"><span class="keyword">function</span> <span class="title">_s_grid_wrapper_end</span><span class="params">(<span class="variable">$container</span> = true)</span> {</span>
+  <span class="keyword">echo</span> <span class="string">"&lt;/div&gt; &lt;!-- .col- --&gt;"</span>
+  .<span class="string">"&lt;/div&gt; &lt;!-- .row --&gt;"</span>;
+  <span class="keyword">if</span> (<span class="variable">$container</span>) {
+    <span class="keyword">echo</span> <span class="string">"&lt;/div&gt; &lt;!-- .container --&gt;"</span>;
+  }
+}
+</pre></td></tr></table></figure>
+
+<p>Voila, grid-ified:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container hero"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"col-md-6"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Hi, I am inside the <span class="tag">&lt;<span class="title">code</span>&gt;</span>.col-md-6<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>Just a few examples of using <code>functions.php</code> to help me cut up on writing code over and over again.</p>
+<blockquote>
+<p>Side note: While working on this, I had an idea that would make it even more smooth. I’d love to see someone using Gulp and with a bleeding edge mentality develop a boilerplate theme using JADE templates or the otherwise. Any takers? Anyone out there trying to write advanced themes using WordPress?</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/" data-id="o4bpvclgro66s2iu" class="article-share-link">Share</a>
+      
+        <a href="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/advanced custom fields/">advanced custom fields</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/helpers/">helpers</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wordpress/">wordpress</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-converting-gulp-into-coffee" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/04/28/converting-gulp-into-coffee/" class="article-date">
@@ -151,7 +349,7 @@ $ rm -rf **/*.js
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/" data-id="mtalfb26uot6fq5f" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/" data-id="5c4750gj7adapz15" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -354,7 +552,7 @@ $ rm -rf **/*.js
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/" data-id="ell20ymh6ki7czm7" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/" data-id="awqel90pkipam3bo" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -584,7 +782,7 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="63fy1te52uou2qnv" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="rwkugez98gnsz3lg" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -668,7 +866,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="h7riubkrj1ckv81o" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="bh5w3jhet215gsqf" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -784,7 +982,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="pyzp7q1fuayx21hs" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="updwlx8zsj5369mf" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1200,7 +1398,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="1rpwvuhx9p0ub458" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="ydwdlqzng0nu7kl0" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1246,7 +1444,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="zkaitj5gvx29taou" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="tqqglwvsni014vkq" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1269,7 +1467,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/">Frameworks</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/Hexo/">Hexo</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Gulp/">Gulp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Tools/">Tools</a><span class="category-list-count">2</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/">Frameworks</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/Hexo/">Hexo</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Gulp/">Gulp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Tools/">Tools</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/WordPress/">WordPress</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1278,7 +1476,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/">build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coffeescript/">coffeescript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js2coffee/">js2coffee</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kss/">kss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/less/">less</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/workflow/">workflow</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/advanced custom fields/">advanced custom fields</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/">build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coffeescript/">coffeescript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/helpers/">helpers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js2coffee/">js2coffee</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kss/">kss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/less/">less</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordpress/">wordpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/workflow/">workflow</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1287,7 +1485,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/blog/" style="font-size: 10.00px;">blog</a><a href="/tags/build/" style="font-size: 10.00px;">build</a><a href="/tags/coffeescript/" style="font-size: 10.00px;">coffeescript</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/grunt/" style="font-size: 20.00px;">grunt</a><a href="/tags/gulp/" style="font-size: 20.00px;">gulp</a><a href="/tags/hexo/" style="font-size: 10.00px;">hexo</a><a href="/tags/js2coffee/" style="font-size: 10.00px;">js2coffee</a><a href="/tags/kss/" style="font-size: 10.00px;">kss</a><a href="/tags/less/" style="font-size: 10.00px;">less</a><a href="/tags/node/" style="font-size: 20.00px;">node</a><a href="/tags/sass/" style="font-size: 20.00px;">sass</a><a href="/tags/smacss/" style="font-size: 10.00px;">smacss</a><a href="/tags/workflow/" style="font-size: 10.00px;">workflow</a>
+      <a href="/tags/advanced custom fields/" style="font-size: 10.00px;">advanced custom fields</a><a href="/tags/blog/" style="font-size: 10.00px;">blog</a><a href="/tags/build/" style="font-size: 10.00px;">build</a><a href="/tags/coffeescript/" style="font-size: 10.00px;">coffeescript</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/grunt/" style="font-size: 20.00px;">grunt</a><a href="/tags/gulp/" style="font-size: 20.00px;">gulp</a><a href="/tags/helpers/" style="font-size: 10.00px;">helpers</a><a href="/tags/hexo/" style="font-size: 10.00px;">hexo</a><a href="/tags/js2coffee/" style="font-size: 10.00px;">js2coffee</a><a href="/tags/kss/" style="font-size: 10.00px;">kss</a><a href="/tags/less/" style="font-size: 10.00px;">less</a><a href="/tags/node/" style="font-size: 20.00px;">node</a><a href="/tags/sass/" style="font-size: 20.00px;">sass</a><a href="/tags/smacss/" style="font-size: 10.00px;">smacss</a><a href="/tags/wordpress/" style="font-size: 10.00px;">wordpress</a><a href="/tags/workflow/" style="font-size: 10.00px;">workflow</a>
     </div>
   </div>
 
@@ -1296,7 +1494,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05">May 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1306,6 +1504,10 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/05/05/speeding-up-wordpress-with-helpers/">Speeding Up WordPress, Advanced Custom Fields, and more with helper functions</a>
+          </li>
         
           <li>
             <a href="/2014/04/28/converting-gulp-into-coffee/">Converting Gulp into Coffee</a>
@@ -1321,10 +1523,6 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
         
           <li>
             <a href="/2014/04/06/soft-injecting-css/">Soft Injecting CSS</a>
-          </li>
-        
-          <li>
-            <a href="/2014/04/06/open-files-recursively-with-a-simple-grunt-task/">Open files recursively with a Simple Grunt task.</a>
           </li>
         
       </ul>

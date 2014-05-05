@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-04-30T20:41:44.801Z</updated>
+  <updated>2014-05-05T07:51:52.374Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -13,6 +13,179 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Speeding Up WordPress, Advanced Custom Fields, and more with helper functions]]></title>
+    <link href="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/"/>
+    <id>http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/</id>
+    <published>2014-05-05T07:36:15.000Z</published>
+    <updated>2014-05-05T07:51:21.000Z</updated>
+    <content type="html"><![CDATA[<p>I don’t particularly love working in WordPress, because at this point I feel everything I’ve ever needed to do, I’ve done many times before. I’ve just seen about everything imagineable when it comes to WordPress development, and until tonight thought it was mostly a cut and run kind of deal.</p>
+<p>With a recent project I’ve been focusing on really, really optimizing and elegantly developing my theme using DRY code. It’s been an admittedly fun process seeing my templates completely dry up, and while PHP is often messy (it’s official, I now hate semicolons, by the way) it has saved me quite a bit of time rolling boilerplate code.</p>
+<p>I’m using the awesome <a href="http://www.advancedcustomfields.com/" target="_blank">Advanced Custom Fields</a> plugin, which I have to give credit to Elliot Condon for. He’s really made a powerful system that in my opinion is one of the best open-sourced CMS platforms I’ve ever seen. It’s quite incredible what you can do with it now, really.</p>
+<p>Here are a few examples of tricky things I’ve integrated into my theme that have helped save tons of time:</p>
+<h5 id="Button_helper:">Button helper:</h5>
+<p><em>Outputs a quick button with optional internal page-link or external options. That there saved me 10 lines of boilerplate code.</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_custom_field_link(<span class="string">'btn btn-primary'</span>); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions-custom.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="code"><pre><span class="comment">/**
+ * custom field link helper
+ *<span class="phpdoc"> @param</span>  string $className
+ *         add a custom class name to element
+ *<span class="phpdoc"> @return</span> string
+ *         returns button text for view.
+ */</span>
+<span class="function"><span class="keyword">function</span> <span class="title">_s_custom_field_link</span><span class="params">(<span class="variable">$className</span>)</span> {</span>
+  <span class="variable">$text</span> = get_sub_field(<span class="string">'button_text'</span>);
+  <span class="keyword">if</span> (!<span class="variable">$className</span>) {
+    <span class="variable">$className</span> = <span class="string">'btn btn-primary'</span>;
+  }
+  <span class="keyword">if</span> (get_sub_field(<span class="string">'external_button_link'</span>)) {
+    <span class="comment">// external link stuff</span>
+    <span class="variable">$link</span> = get_sub_field(<span class="string">'external_button_link'</span>);
+  } <span class="keyword">else</span> {
+    <span class="variable">$link</span> = get_sub_field(<span class="string">'button_link'</span>);
+  }
+  <span class="comment">// echo "&lt;a href="$link"&gt;$text&lt;/a&gt;";</span>
+  <span class="keyword">echo</span> <span class="string">"&lt;a class='$className' href='$link'&gt;$text&lt;/a&gt;"</span>;
+}
+</pre></td></tr></table></figure>
+
+<h5 id="Field_conditional">Field conditional</h5>
+<p><em>Or take this for example, which I’ve found I do a lot. Say I want to have a field displayed, wrapped in an HTML tag, only if it’s present. And I want to avoid writing <code>get_field</code> vs. <code>get_sub_field</code> every time:</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_custom_field(<span class="string">'title'</span>, <span class="string">'h2'</span>, <span class="string">'title'</span>, <span class="keyword">true</span>); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">_s_custom_field</span><span class="params">(<span class="variable">$name</span>, <span class="variable">$tag</span>, <span class="variable">$class</span> = <span class="string">''</span>, <span class="variable">$subField</span> = false)</span> {</span>
+  <span class="keyword">if</span> (<span class="variable">$subField</span>) {
+    <span class="variable">$function</span> = get_sub_field;
+  } <span class="keyword">else</span> {
+    <span class="variable">$function</span> = get_field;
+  }
+  <span class="keyword">if</span> (<span class="variable">$function</span>(<span class="variable">$name</span>)) {
+    <span class="variable">$str</span> = <span class="string">''</span>;
+    <span class="variable">$str</span> .= <span class="string">"&lt;{$tag} class='{$class}'&gt;"</span>;
+    <span class="variable">$str</span> .= <span class="variable">$function</span>(<span class="variable">$name</span>);
+    <span class="variable">$str</span> .= <span class="string">"&lt;/{$tag}&gt;"</span>;
+    <span class="keyword">echo</span> <span class="variable">$str</span>;
+  }
+}
+</pre></td></tr></table></figure>
+
+<p>Link conditional, magic.</p>
+<h5 id="Grid_wrappers">Grid wrappers</h5>
+<p><em>..or, avoid the semi-annoying Bootstrap grid wrappers:</em></p>
+<figure class="highlight html"><figcaption><span>page-home.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="php"><span class="preprocessor">&lt;?php</span> _s_grid_wrapper_start(<span class="string">'col-md-6'</span>, <span class="keyword">true</span>, <span class="string">'hero'</span>); <span class="preprocessor">?&gt;</span></span>
+  <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Hi, I am inside the <span class="tag">&lt;<span class="title">code</span>&gt;</span>.col-md-6<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+<span class="php"><span class="preprocessor">&lt;?php</span> _s_grid_wrapper_end(); <span class="preprocessor">?&gt;</span></span>
+</pre></td></tr></table></figure>
+
+<figure class="highlight php"><figcaption><span>functions.php</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre><span class="function"><span class="keyword">function</span> <span class="title">_s_grid_wrapper_start</span><span class="params">(<span class="variable">$className</span> = <span class="string">"col-md-12"</span>, <span class="variable">$container</span> = true, <span class="variable">$containerClassName</span> = <span class="string">""</span>)</span> {</span>
+  <span class="keyword">if</span> (<span class="variable">$container</span>) {
+    <span class="keyword">echo</span> <span class="string">"&lt;div class='container'&gt;"</span>;
+  }
+  <span class="keyword">echo</span> <span class="string">"&lt;div class='row'&gt;"</span>
+  .<span class="string">"&lt;div class='$className'&gt;"</span>;
+}
+<span class="comment">// grid wrapper end</span>
+<span class="function"><span class="keyword">function</span> <span class="title">_s_grid_wrapper_end</span><span class="params">(<span class="variable">$container</span> = true)</span> {</span>
+  <span class="keyword">echo</span> <span class="string">"&lt;/div&gt; &lt;!-- .col- --&gt;"</span>
+  .<span class="string">"&lt;/div&gt; &lt;!-- .row --&gt;"</span>;
+  <span class="keyword">if</span> (<span class="variable">$container</span>) {
+    <span class="keyword">echo</span> <span class="string">"&lt;/div&gt; &lt;!-- .container --&gt;"</span>;
+  }
+}
+</pre></td></tr></table></figure>
+
+<p>Voila, grid-ified:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"container hero"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"row"</span>&gt;</span>
+    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"col-md-6"</span>&gt;</span>
+      <span class="tag">&lt;<span class="title">h2</span>&gt;</span>Hi, I am inside the <span class="tag">&lt;<span class="title">code</span>&gt;</span>.col-md-6<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
+    <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+  <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+</pre></td></tr></table></figure>
+
+<p>Just a few examples of using <code>functions.php</code> to help me cut up on writing code over and over again.</p>
+<blockquote>
+<p>Side note: While working on this, I had an idea that would make it even more smooth. I’d love to see someone using Gulp and with a bleeding edge mentality develop a boilerplate theme using JADE templates or the otherwise. Any takers? Anyone out there trying to write advanced themes using WordPress?</p>
+</blockquote>
+]]></content>
+    
+    
+      <category term="wordpress" scheme="http://blog.andrewmart.in/tags/wordpress/"/>
+    
+      <category term="helpers" scheme="http://blog.andrewmart.in/tags/helpers/"/>
+    
+      <category term="advanced custom fields" scheme="http://blog.andrewmart.in/tags/advanced%20custom%20fields/"/>
+    
+      <category term="WordPress" scheme="http://blog.andrewmart.in/categories/WordPress/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Converting Gulp into Coffee]]></title>

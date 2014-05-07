@@ -86,6 +86,101 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-rapid-development-with-sublime-text" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/05/07/rapid-development-with-sublime-text/" class="article-date">
+  <time datetime="2014-05-07T22:44:27.000Z" itemprop="datePublished">5/7/14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Front End Development/">Front End Development</a>►<a class="article-category-link" href="/categories/Front End Development/Sublime Text/">Sublime Text</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/05/07/rapid-development-with-sublime-text/">Rapid Development with Sublime Text</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>If you scan the posts in my blog, you’ll quickly see they all have one thing in common: <strong>Speed</strong>. I like to learn things that help me move quickly for two reasons: I get to ship more code (service more Clients) and I get to learn more things. Win win.</p>
+<p>One thing I spend every few months or so going through is my <code>Sublime Text</code> workflow.</p>
+<p>This is an old feature, but man oh man did it help save a lot of time this week. If you’re like me, you’re probably jumping through a lot of files trying to find Class definitons, variables, and the like.</p>
+<p><code>Goto -&gt; Goto Symbol in Project</code> can help with that, especially with namedspaced top level classes.</p>
+<p>At the same time, this is all great, but by default it will search everything, which is bad. If you’re using CoffeeScript, you probably don’t want to hit all of your <code>.js</code> files, and the same goes for CSS preprocessors.</p>
+<h4 id="Sublime_Project_spaces_for_the_win!">Sublime Project spaces for the win!</h4>
+<p>Hit the <code>Project</code> menu and go to <code>Save Project As...</code>. Then, hit <code>Edit Project</code> in the same menu, and add something like this:</p>
+<figure class="highlight json"><figcaption><span>my_project.sublime-project</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="code"><pre>{
+  "<span class="attribute">folders</span>": <span class="value">[{
+    "<span class="attribute">file_exclude_patterns</span>": <span class="value">[
+      <span class="string">".gitignore"</span>
+      <span class="string">"apps/**/*.js"</span>,
+      <span class="string">"dist/js/**/*.js"</span>,
+      <span class="string">"dist/js/*.js"</span>,
+      <span class="string">"dist/stylesheets/*.css"</span>
+    ]</span>,
+    "<span class="attribute">folder_exclude_patterns</span>": <span class="value">[
+      <span class="string">"assets/components"</span>,
+      <span class="string">"gulp"</span>,
+      <span class="string">"docs"</span>,
+      <span class="string">"dist/build"</span>
+    ]</span>,
+    "<span class="attribute">follow_symlinks</span>": <span class="value"><span class="literal">true</span></span>,
+    "<span class="attribute">path</span>": <span class="value"><span class="string">"src"</span>
+  </span>}]
+</span>}
+</pre></td></tr></table></figure>
+
+<p>Boom. All those nasty artifact files are completely ignored from the listing. You can exclude entire directories, just files, or as you can see hear use patterns to define files to ignore.</p>
+<p>Overall performance, file indexing, and searching across your codebase is also vastly improved with this. I haven’t even taken it to the level I want to yet (there are a few more patterns I’d like to add), but this is a huge step in the right direction.</p>
+<p>The cool thing here is, as you write rules and save this file, it’ll automatically refresh your folder list. So, you can temporarily and quickly add a folder pattern back into the view and not worry about reopening the project or relaunching Sublime.</p>
+<p>I’m way behind the ball with this feature, I know, but hey, give me some credit that I’ve made it this long without finding a building to jump off of. Good day!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/" data-id="cno0fa8cxv4xy904" class="article-share-link">Share</a>
+      
+        <a href="http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sublime text, indexing, rapid development/">sublime text, indexing, rapid development</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-speeding-up-wordpress-with-helpers" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/05/05/speeding-up-wordpress-with-helpers/" class="article-date">
@@ -270,7 +365,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/" data-id="o4bpvclgro66s2iu" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/" data-id="owgwgtv06qk4xabl" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/05/05/speeding-up-wordpress-with-helpers/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -349,7 +444,7 @@ $ rm -rf **/*.js
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/" data-id="5c4750gj7adapz15" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/" data-id="ixxf6ugo67305fm4" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/28/converting-gulp-into-coffee/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -552,7 +647,7 @@ $ rm -rf **/*.js
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/" data-id="awqel90pkipam3bo" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/" data-id="yd73ycnnewq9nrug" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -782,7 +877,7 @@ module.exports = <span class="function"><span class="keyword">function</span><sp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="rwkugez98gnsz3lg" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/" data-id="bn9ya1rfmz8r3xxk" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/10/returning-streams-with-gulp/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -866,7 +961,7 @@ All Set Up! Now copy & paste this snippet just before the closing &lt;/body&gt; 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="bh5w3jhet215gsqf" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/" data-id="vfn825nhe669rw2e" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/soft-injecting-css/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -982,7 +1077,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="updwlx8zsj5369mf" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/" data-id="eqobhut61hwze87n" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/06/open-files-recursively-with-a-simple-grunt-task/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1398,7 +1493,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="ydwdlqzng0nu7kl0" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/" data-id="m0g8s8cstsz6fhxw" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/loops-and-mixins-in-sass/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1444,7 +1539,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="tqqglwvsni014vkq" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/04/05/hello-world/" data-id="x58wqpkd0s92ii7n" class="article-share-link">Share</a>
       
         <a href="http://blog.andrewmart.in/2014/04/05/hello-world/#disqus_thread" class="article-comment-link">Comments</a>
       
@@ -1467,7 +1562,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/">Frameworks</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/Hexo/">Hexo</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">6</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Gulp/">Gulp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Tools/">Tools</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/WordPress/">WordPress</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/">Frameworks</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Frameworks/Hexo/">Hexo</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/">Front End Development</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Gulp/">Gulp</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Sublime Text/">Sublime Text</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Front End Development/Tools/">Tools</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/WordPress/">WordPress</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1476,7 +1571,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/advanced custom fields/">advanced custom fields</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/">build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coffeescript/">coffeescript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/helpers/">helpers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js2coffee/">js2coffee</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kss/">kss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/less/">less</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordpress/">wordpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/workflow/">workflow</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/advanced custom fields/">advanced custom fields</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/">build</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/coffeescript/">coffeescript</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/">css</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/grunt/">grunt</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gulp/">gulp</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/helpers/">helpers</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js2coffee/">js2coffee</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kss/">kss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/less/">less</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/">node</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sass/">sass</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smacss/">smacss</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime text, indexing, rapid development/">sublime text, indexing, rapid development</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wordpress/">wordpress</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/workflow/">workflow</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1485,7 +1580,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/advanced custom fields/" style="font-size: 10.00px;">advanced custom fields</a><a href="/tags/blog/" style="font-size: 10.00px;">blog</a><a href="/tags/build/" style="font-size: 10.00px;">build</a><a href="/tags/coffeescript/" style="font-size: 10.00px;">coffeescript</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/grunt/" style="font-size: 20.00px;">grunt</a><a href="/tags/gulp/" style="font-size: 20.00px;">gulp</a><a href="/tags/helpers/" style="font-size: 10.00px;">helpers</a><a href="/tags/hexo/" style="font-size: 10.00px;">hexo</a><a href="/tags/js2coffee/" style="font-size: 10.00px;">js2coffee</a><a href="/tags/kss/" style="font-size: 10.00px;">kss</a><a href="/tags/less/" style="font-size: 10.00px;">less</a><a href="/tags/node/" style="font-size: 20.00px;">node</a><a href="/tags/sass/" style="font-size: 20.00px;">sass</a><a href="/tags/smacss/" style="font-size: 10.00px;">smacss</a><a href="/tags/wordpress/" style="font-size: 10.00px;">wordpress</a><a href="/tags/workflow/" style="font-size: 10.00px;">workflow</a>
+      <a href="/tags/advanced custom fields/" style="font-size: 10.00px;">advanced custom fields</a><a href="/tags/blog/" style="font-size: 10.00px;">blog</a><a href="/tags/build/" style="font-size: 10.00px;">build</a><a href="/tags/coffeescript/" style="font-size: 10.00px;">coffeescript</a><a href="/tags/css/" style="font-size: 10.00px;">css</a><a href="/tags/grunt/" style="font-size: 20.00px;">grunt</a><a href="/tags/gulp/" style="font-size: 20.00px;">gulp</a><a href="/tags/helpers/" style="font-size: 10.00px;">helpers</a><a href="/tags/hexo/" style="font-size: 10.00px;">hexo</a><a href="/tags/js2coffee/" style="font-size: 10.00px;">js2coffee</a><a href="/tags/kss/" style="font-size: 10.00px;">kss</a><a href="/tags/less/" style="font-size: 10.00px;">less</a><a href="/tags/node/" style="font-size: 20.00px;">node</a><a href="/tags/sass/" style="font-size: 20.00px;">sass</a><a href="/tags/smacss/" style="font-size: 10.00px;">smacss</a><a href="/tags/sublime text, indexing, rapid development/" style="font-size: 10.00px;">sublime text, indexing, rapid development</a><a href="/tags/wordpress/" style="font-size: 10.00px;">wordpress</a><a href="/tags/workflow/" style="font-size: 10.00px;">workflow</a>
     </div>
   </div>
 
@@ -1494,7 +1589,7 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05">May 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">7</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05">May 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04">April 2014</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1504,6 +1599,10 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2014/05/07/rapid-development-with-sublime-text/">Rapid Development with Sublime Text</a>
+          </li>
         
           <li>
             <a href="/2014/05/05/speeding-up-wordpress-with-helpers/">Speeding Up WordPress, Advanced Custom Fields, and more with helper functions</a>
@@ -1519,10 +1618,6 @@ fs = <span class="built_in">require</span>(<span class="string">'fs'</span>)
         
           <li>
             <a href="/2014/04/10/returning-streams-with-gulp/">Synchronous Streams with Gulp</a>
-          </li>
-        
-          <li>
-            <a href="/2014/04/06/soft-injecting-css/">Soft Injecting CSS</a>
           </li>
         
       </ul>

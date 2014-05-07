@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
   
-  <title>Tag: kss | Andrew Martin is a Web Developer</title>
+  <title>Tag: sublime text, indexing, rapid development | Andrew Martin is a Web Developer</title>
 
   <meta name="description" content="Andrew Martin is a web developer who is infatuated with building beautiful applications. This is his blog." />
 
@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="og:type" content="blog">
 <meta name="og:title">
-<meta name="og:url" content="http://blog.andrewmart.in/tags/kss/">
+<meta name="og:url" content="http://blog.andrewmart.in/tags/sublime text, indexing, rapid development/">
 <meta name="og:image">
 <meta name="og:site_name" content="Andrew Martin is a Web Developer">
 <meta name="og:description">
@@ -86,14 +86,14 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-generating-style-guides-with-kss" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-rapid-development-with-sublime-text" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/04/12/generating-style-guides-with-kss/" class="article-date">
-  <time datetime="2014-04-13T03:21:39.000Z" itemprop="datePublished">4/12/14</time>
+    <a href="/2014/05/07/rapid-development-with-sublime-text/" class="article-date">
+  <time datetime="2014-05-07T22:44:27.000Z" itemprop="datePublished">5/7/14</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Front End Development/">Front End Development</a>►<a class="article-category-link" href="/categories/Front End Development/Tools/">Tools</a>
+    <a class="article-category-link" href="/categories/Front End Development/">Front End Development</a>►<a class="article-category-link" href="/categories/Front End Development/Sublime Text/">Sublime Text</a>
   </div>
 
   </div>
@@ -104,7 +104,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2014/04/12/generating-style-guides-with-kss/">Generating Style Guides with KSS</a>
+      <a class="article-title" href="/2014/05/07/rapid-development-with-sublime-text/">Rapid Development with Sublime Text</a>
     </h1>
   
 
@@ -112,53 +112,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Documenting style will always be a challenge. I think it’s up to you to decide the project’s balance between:</p>
-<ul>
-<li>The need for providing clear documentation.</li>
-<li>The practical use a styleguide would actually serve to the project’s stakeholders</li>
-</ul>
-<p>And here’s the key one I’ve usually found a challenge on most projects:</p>
-<p><em>For a style guide to be effective and worth your time,</em></p>
-<blockquote>
-<p>It takes the concern and vested interest of the other developers on the team to carefully contribute to the documentation, while sticking to a set of style structure and organization.</p>
-</blockquote>
-<p>This last one is always a problem. I’ve found that on the many projects I’ve been involved with, more often than not, the prjoect turns into a mess of tangled CSS code and rules. It doesn’t matter how well we structure the files and folders from the beginning; when push comes to shove, deadlines and pressure cause us to be messy developers. I’m guilty of it as well.</p>
-<p>On this particular project, the team already had a style guide set up using static HTML.  I knew there had to be a better way, and I found a perfect way to do it.</p>
-<p>That’s where <a href="http://warpspire.com/kss/" target="_blank">Knyle Style Sheets</a> come in. The developer, <a href="http://warpspire.com/" target="_blank">Kyle Neath</a> seems to enjoy the way <a href="https://github.com/styleguide" target="_blank">Github does it</a> and has created a nice solution to do it. It automatically parses your <code>.scss</code>, <code>.less</code>, or <code>.css</code> files when you write in the <a href="http://warpspire.com/kss/syntax/" target="_blank">approrpiate syntax</a> and generates some static HTML for you.</p>
-<p>Unfortunately, when it comes to the <code>grunt</code> and <code>node</code> stack, it was really tricky for me to get it spinning up.</p>
-<p>I ended up finding a winning combination: I used <a href="https://github.com/indieisaconcept/grunt-styleguide" target="_blank"><code>grunt-styleguide</code></a> and <a href="https://github.com/htanjo/kss-node-template" target="_blank">this awesome template</a>, plus a couple hacks to get it working.</p>
-<p>I’ll leave out the entire <code>Gruntfile</code>. Our project compiles styles from <code>assets/styles</code> into the <code>public/css/</code> directory.</p>
-<h6 id="<code>styleguide</code>_task:"><code>styleguide</code> task:</h6>
-<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-</pre></td><td class="code"><pre><span class="attribute">styleguide</span>:
-  <span class="attribute">options</span>:
-    <span class="attribute">template</span>:
-      <span class="attribute">src</span>: <span class="string">'assets/vendor/styleguide-template'</span>
-    <span class="attribute">framework</span>:
-      <span class="attribute">name</span>: <span class="string">'kss'</span>
-      <span class="attribute">options</span>:
-        <span class="attribute">includeType</span>: <span class="string">'sass'</span>
-        <span class="attribute">includePath</span>: <span class="string">'public/css/application.css'</span>
-  <span class="attribute">all</span>:
-    <span class="attribute">files</span>: [<span class="string">'_styleguide'</span>: <span class="string">'assets/styles/**/*.scss'</span>]
-</pre></td></tr></table></figure>
-
-<p><code>assets/vendor/styleguide-template</code> is a clone of the template repo mentioned earlier, with some minor customizations to the template.</p>
-<p>This task generates static HTML/CSS for a styleguide into the <code>_styleguide</code> directory.</p>
-<p>The tricky part was getting my styles to show up in the outputted code. Unfortuantely, though the <code>grunt-styleguide</code> docs say you can run precompiled code through and it will take care of the rest, no matter how hard I tried, that didn’t work.</p>
-<p>In the end, it was just a simple matter of adding to my <code>copy</code> and <code>watch</code> tasks to copy the compiled CSS over.</p>
-<h5 id="<code>watch</code>_task:"><code>watch</code> task:</h5>
-<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
+        <p>If you scan the posts in my blog, you’ll quickly see they all have one thing in common: <strong>Speed</strong>. I like to learn things that help me move quickly for two reasons: I get to ship more code (service more Clients) and I get to learn more things. Win win.</p>
+<p>One thing I spend every few months or so going through is my <code>Sublime Text</code> workflow.</p>
+<p>This is an old feature, but man oh man did it help save a lot of time this week. If you’re like me, you’re probably jumping through a lot of files trying to find Class definitons, variables, and the like.</p>
+<p><code>Goto -&gt; Goto Symbol in Project</code> can help with that, especially with namedspaced top level classes.</p>
+<p>At the same time, this is all great, but by default it will search everything, which is bad. If you’re using CoffeeScript, you probably don’t want to hit all of your <code>.js</code> files, and the same goes for CSS preprocessors.</p>
+<h4 id="Sublime_Project_spaces_for_the_win!">Sublime Project spaces for the win!</h4>
+<p>Hit the <code>Project</code> menu and go to <code>Save Project As...</code>. Then, hit <code>Edit Project</code> in the same menu, and add something like this:</p>
+<figure class="highlight json"><figcaption><span>my_project.sublime-project</span></figcaption><table><tr><td class="gutter"><pre>1
 2
 3
 4
@@ -170,117 +131,48 @@
 10
 11
 12
-</pre></td><td class="code"><pre><span class="attribute">watch</span>:
-  <span class="attribute">options</span>:
-    <span class="attribute">livereload</span>: <span class="literal">false</span>
-    <span class="attribute">spawn</span>: <span class="literal">false</span>
-
-  <span class="string">'sass-application'</span>:
-    <span class="attribute">livereload</span>: <span class="literal">false</span>
-    <span class="attribute">files</span>: [
-      <span class="string">'assets/styles/application.scss'</span>,
-      <span class="string">'assets/styles/**/*.scss'</span>
-    ]
-    <span class="attribute">tasks</span>: [<span class="string">'sass:application'</span>, <span class="string">'copy:styles'</span>, <span class="string">'styleguide'</span>]
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="code"><pre>{
+  "<span class="attribute">folders</span>": <span class="value">[{
+    "<span class="attribute">file_exclude_patterns</span>": <span class="value">[
+      <span class="string">".gitignore"</span>
+      <span class="string">"apps/**/*.js"</span>,
+      <span class="string">"dist/js/**/*.js"</span>,
+      <span class="string">"dist/js/*.js"</span>,
+      <span class="string">"dist/stylesheets/*.css"</span>
+    ]</span>,
+    "<span class="attribute">folder_exclude_patterns</span>": <span class="value">[
+      <span class="string">"assets/components"</span>,
+      <span class="string">"gulp"</span>,
+      <span class="string">"docs"</span>,
+      <span class="string">"dist/build"</span>
+    ]</span>,
+    "<span class="attribute">follow_symlinks</span>": <span class="value"><span class="literal">true</span></span>,
+    "<span class="attribute">path</span>": <span class="value"><span class="string">"src"</span>
+  </span>}]
+</span>}
 </pre></td></tr></table></figure>
 
-<h5 id="<code>copy:styles</code>_task:"><code>copy:styles</code> task:</h5>
-<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-</pre></td><td class="code"><pre><span class="attribute">copy</span>:
-  <span class="attribute">styles</span>:
-    <span class="attribute">files</span>: [
-      <span class="attribute">expand</span>: <span class="literal">true</span>
-      <span class="attribute">cwd</span>: <span class="string">'public/css'</span>
-      <span class="attribute">src</span>: <span class="string">'**/*'</span>
-      <span class="attribute">dest</span>: <span class="string">'_styleguide/css'</span>
-    ]
-</pre></td></tr></table></figure>
-
-<p>As a bonus, add <code>grunt-contrib-connect</code> and have it boot up a little preview server. This was helpful on a project I was running because <code>index.html</code> wasn’t accessible.</p>
-<figure class="highlight coffee"><figcaption><span>Gruntfile.coffee</span></figcaption><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="code"><pre><span class="attribute">connect</span>:
-  <span class="attribute">styleguide</span>:
-    <span class="attribute">options</span>:
-      <span class="attribute">port</span>: <span class="number">9001</span>
-      <span class="attribute">base</span>: <span class="string">'_styleguide'</span>
-      <span class="attribute">keepalive</span>: <span class="literal">true</span>
-      <span class="attribute">open</span>:
-        <span class="attribute">target</span>: <span class="string">'http://localhost:9001'</span>
-        <span class="attribute">appName</span>: <span class="string">'Google Chrome'</span>
-</pre></td></tr></table></figure>
-
-<p>Pretty cool, huh? Now, in my <code>_modules.scss</code> file, I can add this before the code block I want to add:</p>
-<figure class="highlight sass"><figcaption><span>_modules.scss</span></figcaption><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="code"><pre><span class="comment">// Spacer</span>
-<span class="comment">//</span>
-<span class="comment">// A basic separator element to break up sections.</span>
-<span class="comment">//</span>
-<span class="comment">// Markup: &lt;div class="spacer"&gt;&lt;/div&gt;</span>
-<span class="comment">//</span>
-<span class="comment">// Styleguide 2.1</span>
-</pre></td></tr></table></figure>
-
-<p>The <code>kss-node</code> project is pretty finicky, but when it works, it’s awesome. You can add modifier classes, and it will generate nice code samples and output for each of those modifier classes. You can even add markdown within your descriptions.</p>
-<figure class="highlight sass"><figcaption><span>_modules.sass</span></figcaption><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-</pre></td><td class="code"><pre><span class="comment">// Alerts</span>
-<span class="comment">//</span>
-<span class="comment">// Indicate failure or success. &lt;em&gt;Required: `alert-success` or `alert-error`&lt;/em&gt;</span>
-<span class="comment">//</span>
-<span class="comment">// Markup: &lt;div class="alert {$modifiers}"&gt;You mistyped your password.&lt;/div&gt;</span>
-<span class="comment">//</span>
-<span class="comment">// .alert-error - Indicate an error</span>
-<span class="comment">// .alert-success - Indicate success</span>
-<span class="comment">//</span>
-<span class="comment">// Styleguide 2.2</span>
-</pre></td></tr></table></figure>
-
-<h6 id="Screenshot:">Screenshot:</h6>
-<img src="/images/sample-kss-output.jpg">
-
-
-<p>If you find things aren’t working, check to make sure you’re numbering things in the right order, that you haven’t already documented a section. I had to move a few of my sections around to match the order of the <code>@import</code> statements in my main <code>.scss</code> file.</p>
-<p>You can pretty quickly and easily customize that template as well, if needed.</p>
-<p>Here’s to hoping this helps our team stay on a solid set of rules and continued documentation!</p>
+<p>Boom. All those nasty artifact files are completely ignored from the listing. You can exclude entire directories, just files, or as you can see hear use patterns to define files to ignore.</p>
+<p>Overall performance, file indexing, and searching across your codebase is also vastly improved with this. I haven’t even taken it to the level I want to yet (there are a few more patterns I’d like to add), but this is a huge step in the right direction.</p>
+<p>The cool thing here is, as you write rules and save this file, it’ll automatically refresh your folder list. So, you can temporarily and quickly add a folder pattern back into the view and not worry about reopening the project or relaunching Sublime.</p>
+<p>I’m way behind the ball with this feature, I know, but hey, give me some credit that I’ve made it this long without finding a building to jump off of. Good day!</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/" data-id="yd73ycnnewq9nrug" class="article-share-link">Share</a>
+      <a data-url="http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/" data-id="cno0fa8cxv4xy904" class="article-share-link">Share</a>
       
-        <a href="http://blog.andrewmart.in/2014/04/12/generating-style-guides-with-kss/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/#disqus_thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kss/">kss</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sublime text, indexing, rapid development/">sublime text, indexing, rapid development</a></li></ul>
 
     </footer>
   </div>

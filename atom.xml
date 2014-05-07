@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-05-05T07:51:52.374Z</updated>
+  <updated>2014-05-07T22:59:22.671Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -13,6 +13,74 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Rapid Development with Sublime Text]]></title>
+    <link href="http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/"/>
+    <id>http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/</id>
+    <published>2014-05-07T22:44:27.000Z</published>
+    <updated>2014-05-07T22:59:16.000Z</updated>
+    <content type="html"><![CDATA[<p>If you scan the posts in my blog, you’ll quickly see they all have one thing in common: <strong>Speed</strong>. I like to learn things that help me move quickly for two reasons: I get to ship more code (service more Clients) and I get to learn more things. Win win.</p>
+<p>One thing I spend every few months or so going through is my <code>Sublime Text</code> workflow.</p>
+<p>This is an old feature, but man oh man did it help save a lot of time this week. If you’re like me, you’re probably jumping through a lot of files trying to find Class definitons, variables, and the like.</p>
+<p><code>Goto -&gt; Goto Symbol in Project</code> can help with that, especially with namedspaced top level classes.</p>
+<p>At the same time, this is all great, but by default it will search everything, which is bad. If you’re using CoffeeScript, you probably don’t want to hit all of your <code>.js</code> files, and the same goes for CSS preprocessors.</p>
+<h4 id="Sublime_Project_spaces_for_the_win!">Sublime Project spaces for the win!</h4>
+<p>Hit the <code>Project</code> menu and go to <code>Save Project As...</code>. Then, hit <code>Edit Project</code> in the same menu, and add something like this:</p>
+<figure class="highlight json"><figcaption><span>my_project.sublime-project</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="code"><pre>{
+  "<span class="attribute">folders</span>": <span class="value">[{
+    "<span class="attribute">file_exclude_patterns</span>": <span class="value">[
+      <span class="string">".gitignore"</span>
+      <span class="string">"apps/**/*.js"</span>,
+      <span class="string">"dist/js/**/*.js"</span>,
+      <span class="string">"dist/js/*.js"</span>,
+      <span class="string">"dist/stylesheets/*.css"</span>
+    ]</span>,
+    "<span class="attribute">folder_exclude_patterns</span>": <span class="value">[
+      <span class="string">"assets/components"</span>,
+      <span class="string">"gulp"</span>,
+      <span class="string">"docs"</span>,
+      <span class="string">"dist/build"</span>
+    ]</span>,
+    "<span class="attribute">follow_symlinks</span>": <span class="value"><span class="literal">true</span></span>,
+    "<span class="attribute">path</span>": <span class="value"><span class="string">"src"</span>
+  </span>}]
+</span>}
+</pre></td></tr></table></figure>
+
+<p>Boom. All those nasty artifact files are completely ignored from the listing. You can exclude entire directories, just files, or as you can see hear use patterns to define files to ignore.</p>
+<p>Overall performance, file indexing, and searching across your codebase is also vastly improved with this. I haven’t even taken it to the level I want to yet (there are a few more patterns I’d like to add), but this is a huge step in the right direction.</p>
+<p>The cool thing here is, as you write rules and save this file, it’ll automatically refresh your folder list. So, you can temporarily and quickly add a folder pattern back into the view and not worry about reopening the project or relaunching Sublime.</p>
+<p>I’m way behind the ball with this feature, I know, but hey, give me some credit that I’ve made it this long without finding a building to jump off of. Good day!</p>
+]]></content>
+    
+    
+      <category term="sublime text, indexing, rapid development" scheme="http://blog.andrewmart.in/tags/sublime%20text,%20indexing,%20rapid%20development/"/>
+    
+      <category term="Front End Development" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/"/>
+    
+      <category term="Sublime Text" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/Sublime%20Text/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Speeding Up WordPress, Advanced Custom Fields, and more with helper functions]]></title>

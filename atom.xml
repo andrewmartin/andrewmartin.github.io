@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-05-07T22:59:22.671Z</updated>
+  <updated>2014-05-07T23:00:13.298Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -19,13 +19,13 @@
     <link href="http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/"/>
     <id>http://blog.andrewmart.in/2014/05/07/rapid-development-with-sublime-text/</id>
     <published>2014-05-07T22:44:27.000Z</published>
-    <updated>2014-05-07T22:59:16.000Z</updated>
+    <updated>2014-05-07T23:00:08.000Z</updated>
     <content type="html"><![CDATA[<p>If you scan the posts in my blog, you’ll quickly see they all have one thing in common: <strong>Speed</strong>. I like to learn things that help me move quickly for two reasons: I get to ship more code (service more Clients) and I get to learn more things. Win win.</p>
 <p>One thing I spend every few months or so going through is my <code>Sublime Text</code> workflow.</p>
 <p>This is an old feature, but man oh man did it help save a lot of time this week. If you’re like me, you’re probably jumping through a lot of files trying to find Class definitons, variables, and the like.</p>
 <p><code>Goto -&gt; Goto Symbol in Project</code> can help with that, especially with namedspaced top level classes.</p>
 <p>At the same time, this is all great, but by default it will search everything, which is bad. If you’re using CoffeeScript, you probably don’t want to hit all of your <code>.js</code> files, and the same goes for CSS preprocessors.</p>
-<h4 id="Sublime_Project_spaces_for_the_win!">Sublime Project spaces for the win!</h4>
+<h4 id="Sublime_Project_Settings_for_the_win!">Sublime Project Settings for the win!</h4>
 <p>Hit the <code>Project</code> menu and go to <code>Save Project As...</code>. Then, hit <code>Edit Project</code> in the same menu, and add something like this:</p>
 <figure class="highlight json"><figcaption><span>my_project.sublime-project</span></figcaption><table><tr><td class="gutter"><pre>1
 2

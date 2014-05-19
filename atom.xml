@@ -4,7 +4,7 @@
   <subtitle><![CDATA[web development and ramblings in Los Angeles and beyond]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://blog.andrewmart.in/"/>
-  <updated>2014-05-07T23:00:13.298Z</updated>
+  <updated>2014-05-19T04:15:19.455Z</updated>
   <id>http://blog.andrewmart.in/</id>
   
   <author>
@@ -13,6 +13,172 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Fast color helpers with SASS Lists]]></title>
+    <link href="http://blog.andrewmart.in/2014/05/18/more-lists-with-sass/"/>
+    <id>http://blog.andrewmart.in/2014/05/18/more-lists-with-sass/</id>
+    <published>2014-05-19T04:06:48.000Z</published>
+    <updated>2014-05-19T04:14:02.000Z</updated>
+    <content type="html"><![CDATA[<p>Yep, it’s that time of the week again. Time for more insanely optimized helper classes in <code>SASS</code>.</p>
+<p>Let’s talk about colors. So, say you have a list of color variables:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="code"><pre><span class="variable">$blue</span>:      <span class="variable">#0</span>ab0ed;
+<span class="variable">$blue</span><span class="attribute">-dark</span>: <span class="variable">#0064</span>cd;
+<span class="variable">$green</span>:     <span class="variable">#8</span>da1ae;
+<span class="variable">$red</span>:       <span class="variable">#f06338</span>;
+<span class="variable">$yellow</span>:    <span class="variable">#e7dfb1</span>;
+<span class="variable">$orange</span>:    <span class="variable">#f89406</span>;
+<span class="variable">$pink</span>:      <span class="variable">#c3325f</span>;
+<span class="variable">$purple</span>:    <span class="variable">#7</span>a43b6;
+</pre></td></tr></table></figure>
+
+<p>You probably want some helper classes to pepper through your code, like <code>.color-blue</code> or <code>.bg-blue</code>. Fortunately, with SASS lists, this process is almost as easy as typing out the variables in the first place.</p>
+<h5 id="Set_up_a_list:">Set up a list:</h5>
+<figure class="highlight sass"><figcaption><span>variables_and_overrides.scss</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre><span class="variable">$colors</span>: (
+  <span class="variable">$blue</span> blue,
+  <span class="variable">$blue</span><span class="attribute">-dark</span> blue<span class="attribute">-dark</span>,
+  <span class="variable">$green</span> green,
+  <span class="variable">$red</span> red,
+  <span class="variable">$yellow</span> yellow,
+  <span class="variable">$orange</span> orange,
+  <span class="variable">$pink</span> pink,
+  <span class="variable">$purple</span> purple
+  );
+</pre></td></tr></table></figure>
+
+<p>Simple enough, right? Okay, now let’s set up our mixins.</p>
+<h5 id="Set_up_some_mixins_using_interpolation_and_<code>nth</code>:">Set up some mixins using interpolation and <code>nth</code>:</h5>
+<figure class="highlight sass"><figcaption><span>variables_and_overrides.scss</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span class="variable">@mixin</span> generate-colors() {
+  <span class="variable">@each</span> <span class="variable">$color</span> <span class="keyword">in</span> <span class="variable">$colors</span> {
+    .<span class="keyword">color</span>-#{nth(<span class="variable">$color</span>, <span class="number">2</span>)} {
+      <span class="keyword">color</span>: nth(<span class="variable">$color</span>, <span class="number">1</span>);
+    }
+    .bg-#{nth(<span class="variable">$color</span>, <span class="number">2</span>)} {
+      background: nth(<span class="variable">$color</span>, <span class="number">1</span>);
+    }
+    .border-#{nth(<span class="variable">$color</span>, <span class="number">2</span>)} {
+      border-<span class="keyword">color</span>: nth(<span class="variable">$color</span>, <span class="number">1</span>);
+    }
+  }
+}
+</pre></td></tr></table></figure>
+
+<h5 id="Call_your_mixin:">Call your mixin:</h5>
+<figure class="highlight sass"><figcaption><span>variables_and_overrides.scss</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="at_rule">@<span class="keyword">include</span> <span class="function">generate-colors()</span></span>;
+</pre></td></tr></table></figure>
+
+<h5 id="Lust_at_the_beautiful_helpers_at_your_fingertips:">Lust at the beautiful helpers at your fingertips:</h5>
+<figure class="highlight css"><figcaption><span>application.css</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre></td><td class="code"><pre><span class="class">.color-blue</span> <span class="rules">{
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#0ab0ed</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.bg-blue</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#0ab0ed</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.border-blue</span> <span class="rules">{
+  <span class="rule"><span class="attribute">border-color</span>:<span class="value"> <span class="hexcolor">#0ab0ed</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.color-blue-dark</span> <span class="rules">{
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#0064cd</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.bg-blue-dark</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#0064cd</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.border-blue-dark</span> <span class="rules">{
+  <span class="rule"><span class="attribute">border-color</span>:<span class="value"> <span class="hexcolor">#0064cd</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.color-green</span> <span class="rules">{
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#8da1ae</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.bg-green</span> <span class="rules">{
+  <span class="rule"><span class="attribute">background</span>:<span class="value"> <span class="hexcolor">#8da1ae</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.border-green</span> <span class="rules">{
+  <span class="rule"><span class="attribute">border-color</span>:<span class="value"> <span class="hexcolor">#8da1ae</span></span></span>; <span class="rule">}</span></span>
+
+<span class="class">.color-red</span> <span class="rules">{
+  <span class="rule"><span class="attribute">color</span>:<span class="value"> <span class="hexcolor">#f06338</span></span></span>; <span class="rule">}</span></span>
+...
+</pre></td></tr></table></figure>
+
+<h5 id="Side_note_on_speed:">Side note on speed:</h5>
+<p>If you aren’t using it yet, I really encourage you to start using <a href="https://github.com/dlmanning/gulp-sass" target="_blank"><code>gulp-sass</code></a>, which is built ontop of <code>node-sass</code> right now.</p>
+<p>File saves are often under <code>200ms</code>, which is practically instant; and you can get away with doing some pretty insane loops and code generation really quickly and easily. I’m working on a few Rails projects and plan on continuing to use this process instead of the native Rails SASS simply because the speed is extraordinary.</p>
+]]></content>
+    
+    
+      <category term="sass" scheme="http://blog.andrewmart.in/tags/sass/"/>
+    
+      <category term="loops" scheme="http://blog.andrewmart.in/tags/loops/"/>
+    
+      <category term="helpers" scheme="http://blog.andrewmart.in/tags/helpers/"/>
+    
+      <category term="Front End Development" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/"/>
+    
+      <category term="SASS" scheme="http://blog.andrewmart.in/categories/Front%20End%20Development/SASS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Rapid Development with Sublime Text]]></title>
